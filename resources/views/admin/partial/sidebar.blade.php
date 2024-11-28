@@ -1,19 +1,20 @@
+
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }}"
                             href="{{ route('admin.dashboard') }}">
-                            <i class="icon-grid menu-icon"></i>
+                            <i class="bx bx-home-alt"></i>
                             <span class="menu-title">Dashboard</span>
                         </a>
                     </li>
 
 
-    <!-- Sales Management Section Label -->
+
 	<li class="nav-item menu-label">Sales Management</li>
         <li class="nav-item">
             <a class="nav-link {{ request()->is('admin/sales*') ? 'active' : '' }}" data-toggle="collapse" href="#sales-elements" aria-expanded="false" aria-controls="sales-elements">
-                <i class="icon-tag menu-icon"></i>
+                <i class="bx bx-money"></i>
                 <span class="menu-title">Sales</span>
                 <i class="menu-arrow"></i>
             </a>
@@ -29,21 +30,21 @@
             </div>
         </li>
 
-        <!-- Payments Management Section -->
+
 		<li class="nav-item menu-label">Sales Payement Management</li>
         <li class="nav-item">
             <a class="nav-link {{ request()->is('admin/payments') ? 'active' : '' }}" href="{{ route('admin.payments') }}">
-                <i class="icon-credit-card menu-icon"></i>
+                <i class="bx bx-credit-card-front"></i>
                 <span class="menu-title">Payments</span>
             </a>
         </li>
 </li>
 
-        <!-- Refund Management Section Label -->
+
         <li class="nav-item menu-label">Refund Management</li>
         <li class="nav-item">
             <a class="nav-link {{ request()->is('admin/refunds*') ? 'active' : '' }}" data-toggle="collapse" href="#refund-elements" aria-expanded="false" aria-controls="refund-elements">
-                <i class="icon-undo menu-icon"></i>
+                <i class="bx bx-undo"></i>
                 <span class="menu-title">Refund</span>
                 <i class="menu-arrow"></i>
             </a>
@@ -59,17 +60,17 @@
             </div>
         </li>
 
-        <!-- Reports Section Label -->
+
         <li class="nav-item menu-label">Reports</li>
         <li class="nav-item">
             <a class="nav-link {{ request()->is('admin/reports*') ? 'active' : '' }}" data-toggle="collapse" href="#report-elements" aria-expanded="false" aria-controls="report-elements">
-                <i class="bx bx-analyse menu-icon"></i>
+                <i class="bx bx-analyse"></i>
                 <span class="menu-title">Collections Report</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="collapse {{ request()->is('admin/reports*') ? 'show' : '' }}" id="report-elements">
                 <ul class="nav flex-column sub-menu">
-                    <!-- Collections Report -->
+
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('admin/reports/collections') ? 'active' : '' }}" href="due_collections_report.php">
                             <i class="bx bx-radio-circle"></i> Active Due Collections
@@ -91,27 +92,29 @@
                         </a>
                     </li>
 
-                    <!-- Stock Report -->
+
 
                 </ul>
             </div>
+
 			<li class="nav-item">
                         <a class="nav-link {{ request()->is('admin/reports/stock') ? 'active' : '' }}" href="stock_report.php">
-                            <i class="bx bx-coin-stack"></i> Stock Report
+						<i class="bx bx-coin-stack"></i>
+						<span class="menu-title">Stock Report</span>
                         </a>
                     </li>
 
-                    <!-- Payments Report -->
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('admin/reports/payments') ? 'active' : '' }}" href="payments_report.php">
-                            <i class="bx bx-coin-stack"></i> Payments Report
+						<i class="bx bx-coin-stack"></i>
+						<span class="menu-title">Payments Report</span>
                         </a>
                     </li>
 
-                    <!-- Sales Report -->
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('admin/reports/sales') ? 'active' : '' }}" data-toggle="collapse" href="#sales-report-elements" aria-expanded="false" aria-controls="sales-report-elements">
-                            <i class="bx bx-coin"></i> Sales Report
+						<i class="bx bx-coin"></i>
+						<span class="menu-title">Sales Report</span>
                             <i class="menu-arrow"></i>
                         </a>
                         <div class="collapse {{ request()->is('admin/reports/sales*') ? 'show' : '' }}" id="sales-report-elements">
@@ -146,7 +149,6 @@
                     </li>
         </li>
 
-        <!-- Property Management Section Label -->
         <li class="nav-item menu-label">Property Management</li>
         <li class="nav-item">
             <a class="nav-link {{ request()->is('admin/property*') ? 'active' : '' }}" data-toggle="collapse" href="#property-elements" aria-expanded="false" aria-controls="property-elements">
@@ -166,7 +168,7 @@
             </div>
         </li>
 
-        <!-- Customer Management -->
+
 		<li class="nav-item menu-label">Customer Management</li>
         <li class="nav-item">
             <a class="nav-link {{ request()->is('admin/customers') ? 'active' : '' }}" href="customer.php">
@@ -175,7 +177,6 @@
             </a>
         </li>
 
-        <!-- System Management Section Label -->
         <li class="nav-item menu-label">System Management</li>
         <li class="nav-item">
             <a class="nav-link {{ request()->is('admin/system*') ? 'active' : '' }}" href="system-users.php">
