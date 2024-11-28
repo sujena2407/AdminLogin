@@ -79,14 +79,16 @@ a {
 
 .logo-text {
     font-size: 22px;
-
     margin-left: 10px;
-
     margin-bottom: 0;
-
     letter-spacing: 1px;
-
     color: #008cff;
+    display: inline-block; /* Ensures it can be hidden properly */
+}
+
+/* When minimized, hide the logo-text */
+.navbar-brand-wrapper.minimized .logo-text {
+    display: none;
 }
 
 .toggle-icon {
