@@ -1,0 +1,263 @@
+ * {
+    -webkit-print-color-adjust: exact !important;   /* Chrome, Safari 6 – 15.3, Edge */
+    color-adjust: exact !important;                 /* Firefox 48 – 96 */
+    print-color-adjust: exact !important;           /* Firefox 97+, Safari 15.4+ */
+}
+
+body {
+  font-family: Arial, sans-serif;
+   background-color: #ffffff;
+}
+
+table{
+  font-size: 13px;
+}
+
+table tr td.receipt-no{
+    width: 100%;
+    background-color: #fff;
+    color:#000;
+    border-top: 1px solid #222;
+}
+table tr td .receipt-no-span2 h2 {
+  font-size: 18px;
+  color: #fff;
+  background-color: #037c0c;
+  font-weight: 300;
+  padding: 10px 20px;
+  width: 310px;
+  margin-top: 0px;
+  margin-bottom: -40px;
+}   
+.table td, .table th {
+    padding: 0.2rem;
+   vertical-align: top;
+     border-top: none;
+}
+.table td, .table th {
+    padding: 0.2rem;
+    vertical-align: top;
+  border-top: none;
+}
+
+table tr td.boxfield{ 
+  width: 500px; 
+  padding:7px; 
+  border-bottom:none; }
+
+table tr td.boxfield div.currency {
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0.68rem 0.75rem;
+  margin-bottom: 0;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  border: none;
+  background: none repeat scroll 0 0 #037c0c;
+  font-size: 12px;
+  float:left;
+  margin-right: 0px;
+}
+table tr td.boxfield div.amount {
+  display: flex;
+  width: 100%;   
+  padding: 0.42rem 0.75rem;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #037c0c;
+  background-color: #fff;
+  background-clip: padding-box;
+  border:1px solid #037c0c;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  width:165px;
+}
+table table .inner_receipt {
+     color: #444;
+  font-size: 12px;
+  padding: 10px;
+  background-color: #F6F6F6;
+  margin-top: 5px;
+  width: 100%;
+}
+table tr td.label1{width:20%; border:1px solid !important; background-color: #CCCCCC !important; color:#000 !important; border-color: #ccc !important;padding:5px;}
+table tr td.label2{width: 85%; border:1px solid !important; background-color: #f7f4f4 !important; color:#000 !important; border-color: #ccc !important;padding:5px;font-weight: bold!important;}
+table tr td.label3{width: 20%; border:1px solid !important; background-color: #739575 !important; color:#000 !important; border-color: #ccc !important;padding:5px;}
+
+
+.pp-td{
+  font-size: 16px !important;
+  font-style: italic !important;
+  color: #333!important;
+  border-bottom: 1px solid #333 !important;
+}
+div.rptword{
+   display: none;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: 20px;
+}
+.invoice table td, .invoice table th {
+  padding: 15px;
+  background: #fff;
+  border-bottom: 1px solid #fff;
+}
+.invoice table td, .invoice table th {
+  padding: 5px;
+}
+.invoice table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 2px;
+  margin-bottom: 0px;
+  border-collapse: inherit;
+}
+.report1{
+    padding:20px; 
+    border:1px solid #000000;
+}
+header {
+    text-align: center; /* Center align title for normal display */
+}
+.text-danger{
+font-weight: 700;
+}
+.note{
+  border: 1px solid #000000;
+  color:#000000;
+  border-style: dashed;
+  padding:10px;
+}
+.note .system{
+  font-style: italic;
+  color: gray;
+}
+
+/* Print stylesheet */
+ @media print {
+   /* Adjust alignment of the title in the header to the left side */
+   header {
+    text-align: left; /* Center align title for normal display */
+  }
+   table {
+    font-family: sans-serif;
+    font-size: 12px;
+}
+
+.col-md-9{
+      background-color: transparent !important;
+  }
+.col-md-12{
+    background-color: transparent !important;
+}
+
+table tr td.label1{
+  background-color: transparent !important;
+
+}
+table tr td.label2{
+  background-color: transparent !important;
+  font-weight: bold !important;
+}
+
+.pp-td{
+
+  font-size: 16px !important;
+  font-style: italic !important;
+  color: #333!important;
+  border-bottom: 1px solid #333 !important;
+}
+
+h1.printh1 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+table.jambo_table {
+    /* border: 1px solid #ccc !important; */
+}
+
+  .table td.reportborder{
+      padding: 0.2rem;
+      vertical-align: top;
+      border-top: 1px solid #ccc;
+}
+
+div.rptword{
+display: block;
+padding: 0 !important;
+margin: 0 !important;
+font-size: 20px;
+text-align: center;
+}
+div.rptword h1{
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+div.rptword span{
+  font-size: 14px;
+}
+table tfoot {
+  display: none;
+}
+table.jambo_table thead .record-underline {
+    text-decoration: underline;
+    text-decoration-style: double;
+}
+/* Dushmantha  */
+table td .dot {
+    padding: 0px;
+    background: #000;
+    border-bottom: 1px solid #fff;
+}
+.invoice table td, .invoice table th {
+    padding: 5px;
+}
+.report1{
+  padding:20px; 
+  border:none;
+
+}
+.list-inline {
+  padding-left: 0;
+  list-style: none;
+}
+
+.lni {
+  display: inline-block;
+  font: normal normal normal 32px / 1 'LineIcons';
+  font-size: inherit;
+  speak: none;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* #pageFooter
+{
+    page-break-before: always;
+    counter-increment: page;
+} */
+/* #pageFooter:after
+{
+    display: block;
+    text-align: right;
+    content: "Page " counter(page);
+} */
+/* #pageFooter:after {
+counter-increment: page;
+content:"Page " counter(page);
+text-align: right;
+top: 100%;
+white-space: nowrap; 
+z-index: 20px;
+-moz-border-radius: 5px; 
+-moz-box-shadow: 0px 0px 4px #222;  
+background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);  
+background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);  
+} */
+}

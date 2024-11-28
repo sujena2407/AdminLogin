@@ -1,0 +1,266 @@
+ * {
+    -webkit-print-color-adjust: exact !important;   /* Chrome, Safari 6 – 15.3, Edge */
+    color-adjust: exact !important;                 /* Firefox 48 – 96 */
+    print-color-adjust: exact !important;           /* Firefox 97+, Safari 15.4+ */
+}
+
+table{
+  font-size: 13px;
+}
+.paymentslips1,.paymentslips2{
+margin: 5px;
+line-height: 2;
+background-color: #e5e5e5;
+}
+
+table tr td.receipt-no{
+  font-family: "Roboto Condensed",sans-serif;
+  width: 100%;
+  background-color: #fff;
+  color:#000;
+  border-top: 1px solid #222;
+}
+
+table tr td .receipt-no-span h2{
+  font-size: 18px;
+  color: #fff;
+  background-color:#000000;
+  font-family: 'Roboto Condensed', Helvetica, sans-serif;
+  font-weight: 300;
+  padding: 10px 20px;
+  width: 270px;
+  margin-top: 0px;
+  margin-bottom: -40px;
+}
+
+  .table td, .table th {
+      padding: 0.2rem;
+      vertical-align: top;
+       border-top: none;
+  }
+  .table td, .table th {
+      padding: 0.2rem;
+      vertical-align: top;
+      border-top: none;
+  }
+
+  table tr td.boxfield{ width: 500px; padding:7px; border-bottom:none; }
+ /* table tr td.boxfield div.currency { border:none !important; background-color:#666 !important; color:#FFF !important;
+float:left; padding:12px; font-weight:bold; font-size:12px; }
+table tr td.boxfield div.amount { border:1px solid #666; color:#555; float:left;
+font-family:Arial,Verdana,Helvetica,sans-serif; font-size:18px; font-weight:bold; height: 17px; padding:9px 10px 11px; width:170px; }*/
+
+ table tr td.boxfield div.currency {
+
+display: -ms-flexbox;
+display: flex;
+padding: 0.68rem 0.75rem;
+margin-bottom: 0;
+font-size: 12px;
+font-weight: 600;
+line-height: 1.5;
+color: #fff;
+text-align: center;
+white-space: nowrap;
+/* background-color: #e9ecef; */
+border: none;
+background: none repeat scroll 0 0 #525659;
+font-size: 12px;
+float:left;
+margin-right: 0px;
+}
+table tr td.boxfield div.amount {
+display: flex;
+width: 100%;
+/* height: calc(1.5em + 0.75rem + 2px); */
+padding: 0.42rem 0.75rem;
+font-size: 16px;
+font-weight: 600;
+line-height: 1.5;
+color: #555;
+background-color: #fff;
+background-clip: padding-box;
+border:1px solid #525659;
+transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+/* padding:9px 10px 11px; */
+width:165px;
+}
+
+table table .inner_receipt {
+    color: #444;
+    font-size: 12px;
+    padding: 10px;
+    background-color: #F6F6F6;
+    margin-top: 5px;
+    width: 100%;
+}
+table tr td.label1{width:20%; border:1px solid !important; background-color: #CCCCCC !important; color:#000 !important; border-color: #ccc !important;padding:5px;}
+table tr td.label2{width: 85%; border:1px solid !important; background-color: #f7f4f4 !important; color:#000 !important; border-color: #ccc !important;padding:5px;font-weight: bold!important;}
+
+/* .pp-tr{
+border-bottom:1px solid #536069!important;
+} */
+.pp-td{
+
+  font-size: 16px !important;
+  font-style: italic !important;
+  color: #333!important;
+  border-bottom: 1px solid #333 !important;
+}
+
+div.rptword{
+  display: none;
+padding: 0 !important;
+margin: 0 !important;
+font-size: 20px;
+}
+.invoice table td, .invoice table th {
+    padding: 15px;
+    background: #fff;
+    border-bottom: 1px solid #fff;
+}
+.invoice table td, .invoice table th {
+    padding: 5px;
+}
+.invoice table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 2px;
+    margin-bottom: 0px;
+    border-collapse: inherit;
+}
+table tr td .receipt-no-span2 h2 {
+    font-size: 18px;
+    color: #fff;
+    background-color: #000000;
+    font-family: 'Roboto Condensed', Helvetica, sans-serif;
+    font-weight: 300;
+    padding: 10px 20px;
+    width: 310px;
+    margin-top: 0px;
+    margin-bottom: -40px;
+}
+.report1{
+  padding:20px;
+  border:1px solid #000000;
+}
+header {
+  text-align: center; /* Center align title for normal display */
+}
+
+/* Print stylesheet */
+ @media print {
+   /* Adjust alignment of the title in the header to the left side */
+   header {
+    text-align: left; /* Center align title for normal display */
+  }
+   table {
+    font-family: sans-serif;
+    font-size: 12px;
+}
+
+.col-md-9{
+      background-color: transparent !important;
+  }
+.col-md-9.bg-col{
+  padding: 10px !important;
+  background-color: #fafafae5 !important;
+}
+.col-md-12{
+    background-color: transparent !important;
+}
+
+table tr td.label1{
+  background-color: transparent !important;
+
+}
+table tr td.label2{
+  background-color: transparent !important;
+  font-weight: bold !important;
+}
+
+.pp-td{
+
+  font-size: 16px !important;
+  font-style: italic !important;
+  color: #333!important;
+  border-bottom: 1px solid #333 !important;
+}
+
+h1.printh1 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+table.jambo_table {
+    /* border: 1px solid #ccc !important; */
+}
+
+  .table td.reportborder{
+      padding: 0.2rem;
+      vertical-align: top;
+      border-top: 1px solid #ccc;
+}
+
+div.rptword{
+display: block;
+padding: 0 !important;
+margin: 0 !important;
+font-size: 20px;
+text-align: center;
+}
+div.rptword h1{
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+div.rptword span{
+  font-size: 14px;
+}
+table tfoot {
+  display: none;
+}
+table.jambo_table thead .record-underline {
+    text-decoration: underline;
+    text-decoration-style: double;
+}
+/* Dushmantha  */
+table td .dot {
+    padding: 0px;
+    background: #000;
+    border-bottom: 1px solid #fff;
+}
+.invoice table td, .invoice table th {
+    padding: 5px;
+}
+.report1{
+  padding:20px;
+  border:none;
+
+}
+.list-inline {
+  padding-left: 0;
+  list-style: none;
+}
+
+.lni {
+  display: inline-block;
+  font: normal normal normal 32px / 1 'LineIcons';
+  font-size: inherit;
+  speak: none;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+table tr td.label1 {
+  width: 20%;
+  border: 1px solid !important;
+  background-color: #f5f5f5!important;
+  color: #000 !important;
+  border-color: #c0c0c0 !important;
+  padding: 5px;
+}
+.invoice .overflow-auto {
+  border: 1px solid #636363;
+}
+
+}
