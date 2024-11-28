@@ -28,9 +28,9 @@
 <body>
     <div class="container-scroller">
 
+	@include('admin.partial.topbar')
         <div class="container-fluid page-body-wrapper">
 
-        @include('admin.partial.topbar')
         @include('admin.partial.sidebar')
         <div class="main-content">
             @yield('content')
