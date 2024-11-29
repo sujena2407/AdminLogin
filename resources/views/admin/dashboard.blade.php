@@ -12,6 +12,16 @@
     <link rel="stylesheet" href="/css/vertical-layout-light/style.css">
     <link rel="shortcut icon" href="/images/favicon.png" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons/css/boxicons.min.css">
+	<link rel="icon" href="/images/favicon.png" type="image/png" />
+	<!--plugins-->
+	<link href="/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet"/>
+	<link href="/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+	<link href="/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
+	<link href="/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet"/>
+	<!-- loader-->
+	<link href="/css/pace.min.css" rel="stylesheet"/>
+	<script src="/js/pace.min.js"></script>
+	<link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
 
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-extended.css') }}">
@@ -30,7 +40,7 @@
 
         <div class="container-fluid page-body-wrapper">
 
-        @include('admin.partial.topbar')
+
         @include('admin.partial.sidebar')
         <div class="main-content">
             @yield('content')
@@ -274,55 +284,169 @@
     </div>
 
     <script src="/vendors/js/vendor.bundle.base.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+	<script src="/js/jquery.min.js"></script>
+	<script src="/plugins/simplebar/js/simplebar.min.js"></script>
+	<script src="/plugins/metismenu/js/metisMenu.min.js"></script>
+	<script src="/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+	<script src="/plugins/vectormap/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="/plugins/vectormap/jquery-jvectormap-world-mill-en.js"></script>
+	<script src="/plugins/chartjs/js/chart.js"></script>
+	<script src="/select/fstdropdown.js"></script>
+	<script src="/js/app.js"></script>
 
-    <script src="/vendors/chart.js/Chart.min.js"></script>
-    <script src="/vendors/datatables.net/jquery.dataTables.js"></script>
-    <script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
-    <script src="/js/dataTables.select.min.js"></script>
+	<script>
+		var companyId = document.getElementById('hiddenCompanyId').value;
+		$.ajax({
+			url: "chart1_fetch_data.php",
+			type: "GET",
+			data: { company_id: companyId },
+			success: function (data) {
+				var data = JSON.parse(data);
 
-    <script src="/js/off-canvas.js"></script>
-    <script src="/js/hoverable-collapse.js"></script>
-    <script src="/js/template.js"></script>
-    <script src="/js/settings.js"></script>
-    <script src="/js/todolist.js"></script>
-    <script src="/js/dashboard.js"></script>
-    <script src="/js/Chart.roundedBarCharts.js"></script>
-    <script>
-        function setDrop() {
-            if (!document.getElementById('third').classList.contains("fstdropdown-select"))
-                document.getElementById('third').className = 'fstdropdown-select';
-            setFstDropdown();
-        }
-        setFstDropdown();
-        function removeDrop() {
-            if (document.getElementById('third').classList.contains("fstdropdown-select")) {
-                document.getElementById('third').classList.remove('fstdropdown-select');
-                document.getElementById("third").fstdropdown.dd.remove();
-                document.querySelector("#third~.fstdiv").remove();
-            }
-        }
-        function addOptions(add) {
-            var select = document.getElementById("fourth");
-            for (var i = 0; i < add; i++) {
-                var opt = document.createElement("option");
-                var o = Array.from(document.getElementById("fourth").querySelectorAll("option")).slice(-1)[0];
-                var last = o == undefined ? 1 : Number(o.value) + 1;
-                opt.text = opt.value = last;
-                select.add(opt);
-            }
-        }
-        function removeOptions(remove) {
-            for (var i = 0; i < remove; i++) {
-                var last = Array.from(document.getElementById("fourth").querySelectorAll("option")).slice(-1)[0];
-                if (last == undefined)
-                    break;
-                Array.from(document.getElementById("fourth").querySelectorAll("option")).slice(-1)[0].remove();
-            }
-        }
-        function updateDrop() {
-            document.getElementById("fourth").fstdropdown.rebind();
-        }
-    </script>
+					var labels = [];
+					var totalSalesRevenueData = [];
+					var totalCollectionData = [];
+
+					for (var i = 0; i < data.length; i++) {
+						var monthData = data[i];
+						labels.push(monthData.month);
+						totalSalesRevenueData.push(monthData.totalSalesRevenue);
+						totalCollectionData.push(monthData.totalCollection);
+					}
+
+					var ctx = document.getElementById("chart1").getContext('2d');
+
+					var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
+					gradientStroke1.addColorStop(0, '#6078ea');
+					gradientStroke1.addColorStop(1, '#17c5ea');
+
+					var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
+					gradientStroke2.addColorStop(0, '#ff8359');
+					gradientStroke2.addColorStop(1, '#ffdf40');
+
+					var myChart = new Chart(ctx, {
+						type: 'bar',
+						data: {
+							labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+
+							datasets: [{
+								label: 'Total Sales Revenue',
+								data: totalSalesRevenueData,
+								borderColor: gradientStroke1,
+								backgroundColor: gradientStroke1,
+								hoverBackgroundColor: gradientStroke1,
+								pointRadius: 0,
+								fill: false,
+								borderRadius: 20,
+								borderWidth: 0
+							}, {
+								label: 'Total Collection',
+								data: totalCollectionData,
+								borderColor: gradientStroke2,
+								backgroundColor: gradientStroke2,
+								hoverBackgroundColor: gradientStroke2,
+								pointRadius: 0,
+								fill: false,
+								borderRadius: 20,
+								borderWidth: 0
+							}]
+						},
+
+						options: {
+							maintainAspectRatio: false,
+							barPercentage: 0.5,
+							categoryPercentage: 0.8,
+							plugins: {
+								legend: {
+									display: false,
+								}
+							},
+							scales: {
+								y: {
+									beginAtZero: true
+								}
+							}
+						}
+					});
+				},
+			error: function (xhr, status, error) {
+				console.error("AJAX error:", status, error);
+			}
+		});
+	</script>
+
+	<script>
+		var companyId = document.getElementById('hiddenCompanyId').value;
+		$.ajax({
+			url: "chart2_fetch_data.php",
+			type: "GET",
+			data: { company_id: companyId },
+			success: function (data) {
+				// Check if data is already an object
+				if (typeof data === 'object') {
+					var parsedData = data;
+				} else {
+					try {
+						// Try parsing the data as JSON
+						var parsedData = JSON.parse(data);
+					} catch (e) {
+						console.error("Failed to parse data:", e);
+						return;
+					}
+				}
+					var names = [];
+					var saleValues = [];
+					var userList = document.getElementById('topUsersList');
+
+					var barColors = ['#fc4a1a', '#4776e6', '#ee0979', '#42e695'];
+
+					for (var i = 0; i < parsedData.length; i++) {
+						names.push(parsedData[i].name);
+						saleValues.push(parsedData[i].totalSales);
+
+						var formattedAmount = saleValues[i].toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+
+						var listItem = document.createElement('li');
+						listItem.classList.add('list-group-item', 'd-flex', 'bg-transparent', 'justify-content-between', 'align-items-center', 'border-top');
+
+						var userBadge = document.createElement('span');
+						userBadge.classList.add('badge', 'rounded-pill');
+						userBadge.style.backgroundColor = barColors[i];
+						userBadge.innerText = parseFloat(saleValues[i]).toLocaleString();
+						// userBadge.innerText = parseFloat(saleValues[i]).toFixed(2);
+
+						listItem.innerText = names[i];
+						listItem.appendChild(userBadge);
+						userList.appendChild(listItem);
+					}
+
+					new Chart("myChart", {
+						type: "doughnut",
+						data: {
+							labels: names,
+							datasets: [{
+							backgroundColor: barColors,
+							data: saleValues,
+							borderWidth: 1
+							}]
+						},
+						options: {
+							maintainAspectRatio: false,
+							plugins: {
+								legend: {
+									display: false
+								}
+							},
+							cutout: 82
+						}
+					});
+				},
+			error: function (xhr, status, error) {
+				console.error("AJAX error:", status, error);
+			}
+		});
+	</script>
 
 </body>
 
