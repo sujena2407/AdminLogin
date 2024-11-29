@@ -28,7 +28,7 @@
 <body>
     <div class="container-scroller">
 
-	@include('admin.partial.topbar')
+
         <div class="container-fluid page-body-wrapper">
 
         @include('admin.partial.sidebar')
@@ -323,6 +323,29 @@
             document.getElementById("fourth").fstdropdown.rebind();
         }
     </script>
+<script>
+   $(document).ready(function () {
+      // Sidebar Minimize/Expand Toggle
+      $('.toggle-icon').on('click', function () {
+         // Toggle sidebar-mini class to minimize or expand sidebar
+         $('.sidebar-wrapper').toggleClass('sidebar-mini');
+
+         // Toggle arrow icon direction
+         $(this).find('i').toggleClass('bx-arrow-back bx-arrow-forward');
+      });
+
+      // Submenu Toggle for 'has-arrow' items
+      $('.has-arrow').on('click', function (e) {
+         e.preventDefault();
+
+         // Slide toggle the submenu
+         $(this).next('ul').slideToggle();
+
+         // Toggle arrow rotation
+         $(this).find('.parent-icon i').toggleClass('bx-rotate-180');
+      });
+   });
+</script>
 
 </body>
 
