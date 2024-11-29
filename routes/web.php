@@ -32,6 +32,7 @@ Route::prefix('admin/sales')->group(function () {
     Route::get('/', [SalesController::class, 'index'])->name('admin.sales');
     Route::get('/new-sales', [SalesController::class, 'create'])->name('admin.new-sales');
     Route::post('/update', [SalesController::class, 'updateSales'])->name('admin.sales.update');
+    Route::get('/view-sales/{id}', [SalesController::class, 'viewSales'])->name('admin.view-sales');
 });
 
 // Payments Management
@@ -78,3 +79,8 @@ Route::prefix('users')->group(function () {
     Route::put('/{id}', [AdminController::class, 'update'])->name('users.update');
     Route::delete('/{id}', [AdminController::class, 'destroy'])->name('users.destroy');
 });
+
+// Additional Routes from Header
+Route::get('/admin/activity', [AdminController::class, 'showActivityLog'])->name('admin.activity'); // Admin activity log
+Route::get('/admin/email-log', [AdminController::class, 'showEmailLog'])->name('admin.email'); // Admin email log
+Route::get('/view_sales/{id}', [SalesController::class, 'viewSales'])->name('view_sales'); // View sales

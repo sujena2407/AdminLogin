@@ -35,19 +35,17 @@
 <script>
 
 </script>
-<body>
-    <div class="container-scroller">
+<body class="  pace-done"><div class="pace  pace-inactive"><div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
+  <div class="pace-progress-inner"></div>
+</div>
+<div class="pace-activity"></div></div>
+	<!--wrapper-->
 
+	@include('admin.partial.sidebar')
 
-        <div class="container-fluid page-body-wrapper">
-
-        @include('admin.partial.sidebar')
-        <div class="main-content">
-            @yield('content')
-        </div>
+	@include('admin.partial.topbar')
             <!-- partial -->
-            <div class="page-wrapper">
-
+        <div class="page-wrapper">
             <div class="page-content">
 				<div class="d-flex justify-content-end mb-3">
 					<div class="btn-group">
@@ -278,7 +276,7 @@
 			</div>
 
             </div>
-        </div>
+
         <div class="overlay toggle-icon"></div>
 		<a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
     </div>
@@ -293,6 +291,163 @@
 	<script src="/plugins/chartjs/js/chart.js"></script>
 	<script src="/select/fstdropdown.js"></script>
 	<script src="/js/app.js"></script>
+    <script>
+		var companyId = document.getElementById('hiddenCompanyId').value;
+		$.ajax({
+			url: "chart1_fetch_data.php",
+			type: "GET",
+			data: { company_id: companyId },
+			success: function (data) {
+				var data = JSON.parse(data);
+
+					var labels = [];
+					var totalSalesRevenueData = [];
+					var totalCollectionData = [];
+
+					for (var i = 0; i < data.length; i++) {
+						var monthData = data[i];
+						labels.push(monthData.month);
+						totalSalesRevenueData.push(monthData.totalSalesRevenue);
+						totalCollectionData.push(monthData.totalCollection);
+					}
+
+					var ctx = document.getElementById("chart1").getContext('2d');
+
+					var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
+					gradientStroke1.addColorStop(0, '#6078ea');
+					gradientStroke1.addColorStop(1, '#17c5ea');
+
+					var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
+					gradientStroke2.addColorStop(0, '#ff8359');
+					gradientStroke2.addColorStop(1, '#ffdf40');
+
+					var myChart = new Chart(ctx, {
+						type: 'bar',
+						data: {
+							labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+
+							datasets: [{
+								label: 'Total Sales Revenue',
+								data: totalSalesRevenueData,
+								borderColor: gradientStroke1,
+								backgroundColor: gradientStroke1,
+								hoverBackgroundColor: gradientStroke1,
+								pointRadius: 0,
+								fill: false,
+								borderRadius: 20,
+								borderWidth: 0
+							}, {
+								label: 'Total Collection',
+								data: totalCollectionData,
+								borderColor: gradientStroke2,
+								backgroundColor: gradientStroke2,
+								hoverBackgroundColor: gradientStroke2,
+								pointRadius: 0,
+								fill: false,
+								borderRadius: 20,
+								borderWidth: 0
+							}]
+						},
+
+						options: {
+							maintainAspectRatio: false,
+							barPercentage: 0.5,
+							categoryPercentage: 0.8,
+							plugins: {
+								legend: {
+									display: false,
+								}
+							},
+							scales: {
+								y: {
+									beginAtZero: true
+								}
+							}
+						}
+					});
+				},
+			error: function (xhr, status, error) {
+				console.error("AJAX error:", status, error);
+			}
+		});
+	</script>
+
+	<script>
+		var companyId = document.getElementById('hiddenCompanyId').value;
+		$.ajax({
+			url: "chart2_fetch_data.php",
+			type: "GET",
+			data: { company_id: companyId },
+			success: function (data) {
+				// Check if data is already an object
+				if (typeof data === 'object') {
+					var parsedData = data;
+				} else {
+					try {
+						// Try parsing the data as JSON
+						var parsedData = JSON.parse(data);
+					} catch (e) {
+						console.error("Failed to parse data:", e);
+						return;
+					}
+				}
+					var names = [];
+					var saleValues = [];
+					var userList = document.getElementById('topUsersList');
+
+					var barColors = ['#fc4a1a', '#4776e6', '#ee0979', '#42e695'];
+
+					for (var i = 0; i < parsedData.length; i++) {
+						names.push(parsedData[i].name);
+						saleValues.push(parsedData[i].totalSales);
+
+						var formattedAmount = saleValues[i].toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+
+						var listItem = document.createElement('li');
+						listItem.classList.add('list-group-item', 'd-flex', 'bg-transparent', 'justify-content-between', 'align-items-center', 'border-top');
+
+						var userBadge = document.createElement('span');
+						userBadge.classList.add('badge', 'rounded-pill');
+						userBadge.style.backgroundColor = barColors[i];
+						userBadge.innerText = parseFloat(saleValues[i]).toLocaleString();
+						// userBadge.innerText = parseFloat(saleValues[i]).toFixed(2);
+
+						listItem.innerText = names[i];
+						listItem.appendChild(userBadge);
+						userList.appendChild(listItem);
+					}
+
+					new Chart("myChart", {
+						type: "doughnut",
+						data: {
+							labels: names,
+							datasets: [{
+							backgroundColor: barColors,
+							data: saleValues,
+							borderWidth: 1
+							}]
+						},
+						options: {
+							maintainAspectRatio: false,
+							plugins: {
+								legend: {
+									display: false
+								}
+							},
+							cutout: 82
+						}
+					});
+				},
+			error: function (xhr, status, error) {
+				console.error("AJAX error:", status, error);
+			}
+		});
+	</script>
+
+	<script>
+		new PerfectScrollbar(".app-container")
+	</script>
+
     <script>
         function setDrop() {
             if (!document.getElementById('third').classList.contains("fstdropdown-select"))
@@ -329,17 +484,30 @@
             document.getElementById("fourth").fstdropdown.rebind();
         }
     </script>
+
 <script>
-   $(document).ready(function () {
-      // Sidebar Minimize/Expand Toggle
-      $('.toggle-icon').on('click', function () {
-         // Toggle sidebar-mini class to minimize or expand sidebar
-         $('.sidebar-wrapper').toggleClass('sidebar-mini');
+      $(document).ready(function () {
+    $('#toggle-sidebar').on('click', function () {
+        $('#sidebar').toggleClass('collapsed');
 
-         // Toggle arrow icon direction
-         $(this).find('i').toggleClass('bx-arrow-back bx-arrow-forward');
-      });
+        // Check if the sidebar is collapsed
+        if ($('#sidebar').hasClass('collapsed')) {
+            // Hide submenus
+            $('.submenu').slideUp();
 
+            // Hide logo text
+            $('.logo-text').hide();
+
+            // Adjust sidebar header padding
+            $('.sidebar-header').css('padding', '10px');
+        } else {
+            // Show logo text when expanded
+            $('.logo-text').fadeIn();
+
+            // Reset sidebar header padding
+            $('.sidebar-header').css('padding', '10px 15px');
+        }
+    });
       // Submenu Toggle for 'has-arrow' items
       $('.has-arrow').on('click', function (e) {
          e.preventDefault();
