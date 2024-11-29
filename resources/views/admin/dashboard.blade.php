@@ -8,16 +8,26 @@
     <title>Dashboard | Quik Track Admin - Kelsey Developments PLC</title>
     <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
     <link rel="stylesheet" href="/vendors/feather/feather.css">
-
+	<link href="/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet"/>
+	<link href="/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+	<link href="/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
+	<link href="/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet"/>
+	<link href="/css/pace.min.css" rel="stylesheet"/>
+	<script src="/js/pace.min.js"></script>
     <link rel="stylesheet" href="/css/vertical-layout-light/style.css">
     <link rel="shortcut icon" href="/images/favicon.png" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons/css/boxicons.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-extended.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/icons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/fstdropdown.css') }}">
+	<link rel="stylesheet" href="/css/dark-theme.css"/>
+	<link rel="stylesheet" href="assts/css/semi-dark.css"/>
+	<link rel="stylesheet" href="/css/header-colors.css"/>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
@@ -273,20 +283,16 @@
 		<a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
     </div>
 
-    <script src="/vendors/js/vendor.bundle.base.js"></script>
-
-    <script src="/vendors/chart.js/Chart.min.js"></script>
-    <script src="/vendors/datatables.net/jquery.dataTables.js"></script>
-    <script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
-    <script src="/js/dataTables.select.min.js"></script>
-
-    <script src="/js/off-canvas.js"></script>
-    <script src="/js/hoverable-collapse.js"></script>
-    <script src="/js/template.js"></script>
-    <script src="/js/settings.js"></script>
-    <script src="/js/todolist.js"></script>
-    <script src="/js/dashboard.js"></script>
-    <script src="/js/Chart.roundedBarCharts.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+	<script src="/js/jquery.min.js"></script>
+	<script src="/plugins/simplebar/js/simplebar.min.js"></script>
+	<script src="/plugins/metismenu/js/metisMenu.min.js"></script>
+	<script src="/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+	<script src="/plugins/vectormap/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="/plugins/vectormap/jquery-jvectormap-world-mill-en.js"></script>
+	<script src="/plugins/chartjs/js/chart.js"></script>
+	<script src="/select/fstdropdown.js"></script>
+	<script src="/js/app.js"></script>
     <script>
         function setDrop() {
             if (!document.getElementById('third').classList.contains("fstdropdown-select"))

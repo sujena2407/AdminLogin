@@ -24,10 +24,11 @@
                 <div class="parent-icon"><i class='bx bx-money'></i></div>
                 <div class="menu-title">Sales</div>
             </a>
+
             <ul>
-                @if(in_array(session('user_type'), ['0', '1', '2']))
+
                     <li><a href="{{ route('admin.sales') }}"><i class="bx bx-radio-circle"></i>Add New Sales</a></li>
-                @endif
+
                 <li><a href="{{ route('admin.sales') }}"><i class='bx bx-radio-circle'></i>Sales List</a></li>
             </ul>
         </li>
@@ -81,6 +82,7 @@
         </li>
 
         <li>
+        <li>
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class='bx bx-coin'></i></div>
                 <div class="menu-title">Sales Report</div>
@@ -91,7 +93,8 @@
                 <li><a href="{{ route('admin.reports.sales-summary', ['active_status' => 0]) }}"><i class='bx bx-radio-circle'></i>Inactive Sales Summary</a></li>
                 <li><a href="{{ route('admin.reports.monthly-sales-summary') }}"><i class='bx bx-radio-circle'></i>Monthly Sales Summary</a></li>
                 <li><a href="{{ route('admin.reports.customer-list') }}"><i class='bx bx-radio-circle'></i>Customer List</a></li>
-            </ul>
+            </li>
+              </ul>
         </li>
 
         @if(in_array(session('user_type'), ['0', '1', '2', '5']))
@@ -129,26 +132,3 @@
         @endif
     </ul>
 </div>
-<script>
-   $(document).ready(function () {
-      // Sidebar Minimize/Expand Toggle
-      $('.toggle-icon').on('click', function () {
-         // Toggle sidebar-mini class to minimize or expand sidebar
-         $('.sidebar-wrapper').toggleClass('sidebar-mini');
-
-         // Toggle arrow icon direction
-         $(this).find('i').toggleClass('bx-arrow-back bx-arrow-forward');
-      });
-
-      // Submenu Toggle for 'has-arrow' items
-      $('.has-arrow').on('click', function (e) {
-         e.preventDefault();
-
-         // Slide toggle the submenu
-         $(this).next('ul').slideToggle();
-
-         // Toggle arrow rotation
-         $(this).find('.parent-icon i').toggleClass('bx-rotate-180');
-      });
-   });
-</script>
