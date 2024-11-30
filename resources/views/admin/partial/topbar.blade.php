@@ -4,6 +4,7 @@
             <div class="mobile-toggle-menu">
                 <i class="bx bx-menu"></i>
             </div>
+
             <div class="top-menu ms-auto">
                 <ul class="navbar-nav align-items-center gap-1">
                     <li class="nav-item dark-mode d-none d-sm-flex">
@@ -12,7 +13,6 @@
                         </a>
                     </li>
 
-                    <!-- Dropdown App Menu -->
                     <li class="nav-item dropdown dropdown-app">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown" href="javascript:;">
                             <i class="bx bx-grid-alt"></i>
@@ -61,7 +61,6 @@
                         </div>
                     </li>
 
-                    <!-- Notifications -->
                     <li class="nav-item dropdown dropdown-large">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#" data-bs-toggle="dropdown">
                             <span id="showDueCount" class="alert-count">1</span>
@@ -78,7 +77,8 @@
                                 <a class="dropdown-item" href="javascript:;" onclick="viewSale(304)">
                                     <div class="d-flex align-items-center">
                                         <div class="flex-grow-1">
-                                            <h6 class="msg-name">A.. Subathra
+                                            <h6 class="msg-name">
+                                                A.. Subathra
                                                 <span class="msg-time float-end text-danger">1,157,666.67</span>
                                             </h6>
                                             <p class="msg-info">Yarl Royal Palace - C-7th floor</p>
@@ -94,7 +94,6 @@
                         </div>
                     </li>
 
-                    <!-- User Dropdown -->
                     <li class="nav-item dropdown dropdown-large">
                         <div class="user-box dropdown px-3">
                             <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -107,16 +106,17 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
                                     <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.dashboard') }}">
-                                        <i class="bx bx-home-circle fs-5"></i><span>Dashboard</span>
+                                        <i class="bx bx-home-circle fs-5"></i>
+                                        <span>Dashboard</span>
                                     </a>
                                 </li>
                                 <li>
                                     <div class="dropdown-divider mb-0"></div>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.logout') }}"
-                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        <i class="bx bx-log-out-circle"></i><span>Logout</span>
+                                    <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <i class="bx bx-log-out-circle"></i>
+                                        <span>Logout</span>
                                     </a>
                                     <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
                                         @csrf

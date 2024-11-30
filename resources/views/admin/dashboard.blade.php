@@ -1,7 +1,5 @@
-</html>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -24,17 +22,14 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/icons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/fstdropdown.css') }}">
-	<link rel="stylesheet" href="/css/dark-theme.css"/>
-	<link rel="stylesheet" href="assts/css/semi-dark.css"/>
-	<link rel="stylesheet" href="/css/header-colors.css"/>
+	<link rel="stylesheet" href="{{ asset('css/dark-theme.css') }}"/>
+	<link rel="stylesheet" href="{{ asset('css/semi-dark.css') }}"/>
+	<link rel="stylesheet" href="{{ asset('css/header-colors.css') }}"/>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
 </head>
-<script>
-
-</script>
 <body class="  pace-done"><div class="pace  pace-inactive"><div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
   <div class="pace-progress-inner"></div>
 </div>
@@ -487,27 +482,37 @@
 
 <script>
       $(document).ready(function () {
-    $('#toggle-sidebar').on('click', function () {
-        $('#sidebar').toggleClass('collapsed');
+		$('#toggle-sidebar').on('click', function () {
+    $('#sidebar').toggleClass('collapsed'); // Toggle the collapsed class on the sidebar
 
-        // Check if the sidebar is collapsed
-        if ($('#sidebar').hasClass('collapsed')) {
-            // Hide submenus
-            $('.submenu').slideUp();
+    // Check if the sidebar is collapsed
+    if ($('#sidebar').hasClass('collapsed')) {
+        // Hide all submenus
+        $('.mm-collapse').slideUp();
 
-            // Hide logo text
-            $('.logo-text').hide();
+        // Hide the logo text
+        $('.logo-text').hide();
 
-            // Adjust sidebar header padding
-            $('.sidebar-header').css('padding', '10px');
-        } else {
-            // Show logo text when expanded
-            $('.logo-text').fadeIn();
+        // Adjust sidebar header padding for collapsed state
+        $('.sidebar-header').css('padding', '10px');
 
-            // Reset sidebar header padding
-            $('.sidebar-header').css('padding', '10px 15px');
-        }
-    });
+        // Optionally, you can collapse the sidebar menu items
+        $('#menu li a').not('.has-arrow').css('padding-left', '10px');
+    } else {
+        // Show all submenus when the sidebar is expanded
+        $('.mm-collapse').slideDown();
+
+        // Show the logo text when expanded
+        $('.logo-text').fadeIn();
+
+        // Reset sidebar header padding when expanded
+        $('.sidebar-header').css('padding', '10px 15px');
+
+        // Reset padding for menu items
+        $('#menu li a').not('.has-arrow').css('padding-left', '20px');
+    }
+});
+
       // Submenu Toggle for 'has-arrow' items
       $('.has-arrow').on('click', function (e) {
          e.preventDefault();
@@ -519,6 +524,53 @@
          $(this).find('.parent-icon i').toggleClass('bx-rotate-180');
       });
    });
+</script>
+<script>
+$('.toggle-icon').on('click', function () {
+    // Toggle the 'collapsed' class on the sidebar-wrapper for transition effect
+    $('.sidebar-wrapper').toggleClass('collapsed');
+
+    // Check if the sidebar is collapsed
+    if ($('.sidebar-wrapper').hasClass('collapsed')) {
+        // Hide the logo text
+        $('.logo-text').hide();
+
+        // Hide all submenu items
+        $('.metismenu ul').hide();
+
+        // Adjust the sidebar width and menu item styles for the collapsed state
+        $('.sidebar-wrapper').css('width', '80px'); // Adjust width for collapsed state
+
+        // Align menu icons in the center and remove padding for collapsed state
+        $('.metismenu li a').css({
+            'justify-content': 'center',
+            'padding-left': '0',
+        });
+
+        // Hide text for menu items
+        $('.metismenu li a .menu-title').hide();
+    } else {
+        // Show the logo text when expanded
+        $('.logo-text').fadeIn();
+
+        // Show submenu items
+        $('.metismenu ul').slideDown();
+
+        // Reset sidebar width and menu item styles for expanded state
+        $('.sidebar-wrapper').css('width', '250px'); // Reset to the expanded width
+
+        // Reset padding and alignment for expanded menu items
+        $('.metismenu li a').css({
+            'justify-content': 'flex-start',
+            'padding-left': '20px',
+        });
+
+        // Show text for menu items
+        $('.metismenu li a .menu-title').fadeIn();
+    }
+});
+
+
 </script>
 
 </body>
