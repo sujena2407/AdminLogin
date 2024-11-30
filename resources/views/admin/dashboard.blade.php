@@ -482,36 +482,7 @@
 
 <script>
       $(document).ready(function () {
-		$('#toggle-sidebar').on('click', function () {
-    $('#sidebar').toggleClass('collapsed'); // Toggle the collapsed class on the sidebar
 
-    // Check if the sidebar is collapsed
-    if ($('#sidebar').hasClass('collapsed')) {
-        // Hide all submenus
-        $('.mm-collapse').slideUp();
-
-        // Hide the logo text
-        $('.logo-text').hide();
-
-        // Adjust sidebar header padding for collapsed state
-        $('.sidebar-header').css('padding', '10px');
-
-        // Optionally, you can collapse the sidebar menu items
-        $('#menu li a').not('.has-arrow').css('padding-left', '10px');
-    } else {
-        // Show all submenus when the sidebar is expanded
-        $('.mm-collapse').slideDown();
-
-        // Show the logo text when expanded
-        $('.logo-text').fadeIn();
-
-        // Reset sidebar header padding when expanded
-        $('.sidebar-header').css('padding', '10px 15px');
-
-        // Reset padding for menu items
-        $('#menu li a').not('.has-arrow').css('padding-left', '20px');
-    }
-});
 
       // Submenu Toggle for 'has-arrow' items
       $('.has-arrow').on('click', function (e) {
