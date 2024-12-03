@@ -509,6 +509,12 @@ $('.toggle-icon').on('click', function () {
         // Hide all submenu items
         $('.metismenu ul').hide();
 
+        // Hide 'has-arrow' items (the menu items that have submenus)
+        $('.has-arrow').hide();
+
+        // Hide menu labels
+        $('.menu-label').hide();
+
         // Adjust the sidebar width and menu item styles for the collapsed state
         $('.sidebar-wrapper').css('width', '80px'); // Adjust width for collapsed state
 
@@ -526,6 +532,12 @@ $('.toggle-icon').on('click', function () {
 
         // Show submenu items
         $('.metismenu ul').slideDown();
+
+        // Show 'has-arrow' items (the menu items that have submenus)
+        $('.has-arrow').fadeIn();
+
+        // Show menu labels
+        $('.menu-label').fadeIn();
 
         // Reset sidebar width and menu item styles for expanded state
         $('.sidebar-wrapper').css('width', '250px'); // Reset to the expanded width

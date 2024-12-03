@@ -4,7 +4,9 @@
             <div>
                 <img src="{{ asset('/images/logo-icon.png') }}" class="logo-icon" alt="logo icon">
             </div>
-            <h4 class="logo-text">Quick Track</h4>
+            <div>
+                <h4 class="logo-text">Quick Track</h4>
+            </div>
             <div class="toggle-icon ms-auto"><i class="bx bx-arrow-back"></i></div>
         </div>
 
@@ -21,8 +23,9 @@
                 <a href="javascript:;" class="has-arrow">
                     <div class="parent-icon"><i class="bx bx-money"></i></div>
                     <div class="menu-title">Sales</div>
+                    <i class="toggle-arrow"></i>
                 </a>
-                <ul>
+                <ul class="submenu">
                     <li><a href="{{ route('admin.new-sales') }}"><i class="bx bx-radio-circle"></i>Add New Sales</a></li>
                     <li><a href="{{ route('admin.sales') }}"><i class="bx bx-radio-circle"></i>Sales List</a></li>
                 </ul>
@@ -42,7 +45,7 @@
                     <div class="parent-icon"><i class="bx bx-undo"></i></div>
                     <div class="menu-title">Refund</div>
                 </a>
-                <ul>
+                <ul class="submenu">
                     <li><a href="{{ route('admin.refunds') }}"><i class="bx bx-radio-circle"></i>Refund List</a></li>
                     <li><a href="{{ route('admin.refund-payments') }}"><i class="bx bx-radio-circle"></i>Refund Payments</a></li>
                 </ul>
@@ -54,7 +57,7 @@
                     <div class="parent-icon"><i class="bx bx-analyse"></i></div>
                     <div class="menu-title">Collections Report</div>
                 </a>
-                <ul>
+                <ul class="submenu">
                     <li><a href="{{ route('admin.reports.due-collections') }}"><i class="bx bx-radio-circle"></i>Active Due Collections</a></li>
                     <li><a href="{{ route('admin.reports.collections') }}"><i class="bx bx-radio-circle"></i>Active Collections</a></li>
                     <li><a href="{{ route('admin.reports.inactive-due-collections') }}"><i class="bx bx-radio-circle"></i>Inactive Due Collections</a></li>
@@ -78,7 +81,7 @@
                     <div class="parent-icon"><i class="bx bx-coin"></i></div>
                     <div class="menu-title">Sales Report</div>
                 </a>
-                <ul>
+                <ul class="submenu">
                     <li><a href="{{ route('admin.reports.sales-summary') }}"><i class="bx bx-radio-circle"></i>All Sales Summary</a></li>
                     <li><a href="{{ route('admin.reports.sales-summary', ['active_status' => 1]) }}"><i class="bx bx-radio-circle"></i>Active Sales Summary</a></li>
                     <li><a href="{{ route('admin.reports.sales-summary', ['active_status' => 0]) }}"><i class="bx bx-radio-circle"></i>Inactive Sales Summary</a></li>
