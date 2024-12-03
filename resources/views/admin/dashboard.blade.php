@@ -484,23 +484,19 @@
 $(document).ready(function () {
     // Handle sidebar toggle (collapse/expand)
     $('#toggle-sidebar').on('click', function () {
-        $('#sidebar').toggleClass('collapsed'); // Toggle the collapse/expand state of the sidebar
+        $('#sidebar').toggleClass('collapsed');
+        $('#sidebar').data('collapsed-once', $('#sidebar').hasClass('collapsed'));
 
-        // When the sidebar is collapsed
         if ($('#sidebar').hasClass('collapsed')) {
-            $('.submenu').slideUp();  // Hide all submenus when collapsed
-            $('.logo-text').hide();   // Hide logo text
-            $('.bx-arrow-back').hide(); // Hide back arrow
-            $('.menu-label').hide();  // Hide menu labels
-            $('.toggle-arrow').removeClass('bx-rotate-180');  // Reset rotation on collapse
+            $('.submenu').slideUp();
+            $('.menu-label').hide();
+            $('.logo-text').hide();
+            $('.bx-arrow-back').hide();
+            $('.toggle-arrow').removeClass('bx-rotate-180');
         } else {
-            $('.logo-text').fadeIn(); // Show logo text when expanded
-            $('.bx-arrow-back').show();  // Show back arrow
-            $('.menu-label').fadeIn();   // Show menu labels
-
-            // Show all submenus and rotate all arrows when expanded
-            $('.submenu').stop(true, true).slideDown(); // Slide all submenus down
-            $('.toggle-arrow').addClass('bx-rotate-180'); // Rotate all arrows
+            $('.logo-text').fadeIn();
+            $('.bx-arrow-back').fadeIn();
+            $('.menu-label').fadeIn();
         }
     });
 
@@ -509,9 +505,7 @@ $(document).ready(function () {
         e.preventDefault();
         if (!$('#sidebar').hasClass('collapsed')) {
             var submenu = $(this).closest('li').find('.submenu');
-            submenu.stop(true, true).slideToggle(); // Toggle submenu visibility with a smooth transition
-
-            // Toggle the rotation of the clicked arrow
+            submenu.stop(true, true).slideToggle();
             $(this).find('.toggle-arrow').toggleClass('bx-rotate-180');
         }
     });
@@ -519,17 +513,20 @@ $(document).ready(function () {
     // Expand sidebar when mouse enters the sidebar area
     $('#sidebar').on('mouseenter', function () {
         if ($('#sidebar').hasClass('collapsed')) {
-            $('#sidebar').removeClass('collapsed'); // Expand sidebar
+            $('#sidebar').removeClass('collapsed');
+            $('.menu-label').fadeIn();
         }
     });
 
     // Collapse sidebar when mouse leaves the sidebar area
     $('#sidebar').on('mouseleave', function () {
-        if (!$('#sidebar').hasClass('collapsed')) {
-            $('#sidebar').addClass('collapsed'); // Collapse sidebar
+        if ($('#sidebar').data('collapsed-once')) {
+            $('#sidebar').addClass('collapsed');
+            $('.menu-label').fadeOut();
         }
     });
 });
+
 
 </script>
 </body>
