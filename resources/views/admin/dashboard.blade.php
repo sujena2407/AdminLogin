@@ -481,81 +481,57 @@
     </script>
 
 <script>
-      $(document).ready(function () {
+$(document).ready(function () {
+    // Handle sidebar toggle (collapse/expand)
+    $('#toggle-sidebar').on('click', function () {
+        $('#sidebar').toggleClass('collapsed'); // Toggle the collapse/expand state of the sidebar
 
+        // When the sidebar is collapsed
+        if ($('#sidebar').hasClass('collapsed')) {
+            $('.submenu').slideUp();  // Hide all submenus when collapsed
+            $('.logo-text').hide();   // Hide logo text
+            $('.bx-arrow-back').hide(); // Hide back arrow
+            $('.menu-label').hide();  // Hide menu labels
+            $('.toggle-arrow').removeClass('bx-rotate-180');  // Reset rotation on collapse
+        } else {
+            $('.logo-text').fadeIn(); // Show logo text when expanded
+            $('.bx-arrow-back').show();  // Show back arrow
+            $('.menu-label').fadeIn();   // Show menu labels
 
-      // Submenu Toggle for 'has-arrow' items
-      $('.has-arrow').on('click', function (e) {
-         e.preventDefault();
+            // Show all submenus and rotate all arrows when expanded
+            $('.submenu').stop(true, true).slideDown(); // Slide all submenus down
+            $('.toggle-arrow').addClass('bx-rotate-180'); // Rotate all arrows
+        }
+    });
 
-         // Slide toggle the submenu
-         $(this).next('ul').slideToggle();
+    // Handle submenu toggle when sidebar is not collapsed
+    $('.has-arrow').on('click', function (e) {
+        e.preventDefault();
+        if (!$('#sidebar').hasClass('collapsed')) {
+            var submenu = $(this).closest('li').find('.submenu');
+            submenu.stop(true, true).slideToggle(); // Toggle submenu visibility with a smooth transition
 
-         // Toggle arrow rotation
-         $(this).find('.parent-icon i').toggleClass('bx-rotate-180');
-      });
-   });
-</script>
-<script>
-$('.toggle-icon').on('click', function () {
-    // Toggle the 'collapsed' class on the sidebar-wrapper for transition effect
-    $('.sidebar-wrapper').toggleClass('collapsed');
+            // Toggle the rotation of the clicked arrow
+            $(this).find('.toggle-arrow').toggleClass('bx-rotate-180');
+        }
+    });
 
-    // Check if the sidebar is collapsed
-    if ($('.sidebar-wrapper').hasClass('collapsed')) {
-        // Hide the logo text
-        $('.logo-text').hide();
+    // Expand sidebar when mouse enters the sidebar area
+    $('#sidebar').on('mouseenter', function () {
+        if ($('#sidebar').hasClass('collapsed')) {
+            $('#sidebar').removeClass('collapsed'); // Expand sidebar
+        }
+    });
 
-        // Hide all submenu items
-        $('.metismenu ul').hide();
-
-        // Hide 'has-arrow' items (the menu items that have submenus)
-        $('.has-arrow').hide();
-
-        // Hide menu labels
-        $('.menu-label').hide();
-
-        // Adjust the sidebar width and menu item styles for the collapsed state
-        $('.sidebar-wrapper').css('width', '80px'); // Adjust width for collapsed state
-
-        // Align menu icons in the center and remove padding for collapsed state
-        $('.metismenu li a').css({
-            'justify-content': 'center',
-            'padding-left': '0',
-        });
-
-        // Hide text for menu items
-        $('.metismenu li a .menu-title').hide();
-    } else {
-        // Show the logo text when expanded
-        $('.logo-text').fadeIn();
-
-        // Show submenu items
-        $('.metismenu ul').slideDown();
-
-        // Show 'has-arrow' items (the menu items that have submenus)
-        $('.has-arrow').fadeIn();
-
-        // Show menu labels
-        $('.menu-label').fadeIn();
-
-        // Reset sidebar width and menu item styles for expanded state
-        $('.sidebar-wrapper').css('width', '250px'); // Reset to the expanded width
-
-        // Reset padding and alignment for expanded menu items
-        $('.metismenu li a').css({
-            'justify-content': 'flex-start',
-            'padding-left': '20px',
-        });
-
-        // Show text for menu items
-        $('.metismenu li a .menu-title').fadeIn();
-    }
+    // Collapse sidebar when mouse leaves the sidebar area
+    $('#sidebar').on('mouseleave', function () {
+        if (!$('#sidebar').hasClass('collapsed')) {
+            $('#sidebar').addClass('collapsed'); // Collapse sidebar
+        }
+    });
 });
 
-
 </script>
-
 </body>
 
 </html>
