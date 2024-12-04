@@ -147,7 +147,12 @@
                           </div>
 
                           <div class="col-sm-12">
-                            <button type="submit" class="btn btn-primary btn-block" name="add_sales">Next</button>
+                          <form class="row g-3 needs-validation" novalidate method="POST" action="{{ route('admin.sales.store') }}" enctype="multipart/form-data">
+                              @csrf
+                              <!-- Form fields go here -->
+                              <button type="submit" class="btn btn-primary btn-block" name="add_sales">Next</button>
+                          </form>
+
                           </div>
                         </form>
                       </div>

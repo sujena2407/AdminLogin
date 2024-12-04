@@ -26,7 +26,7 @@ class SalesController extends Controller
         $units = Unit::all();
 
         // Return the view with data
-        return view('admin.sales.create', compact('customers', 'projects', 'units'));
+        return view('admin.sales.new-sales', compact('customers', 'projects', 'units'));
     }
 
     // Store a newly created sale
