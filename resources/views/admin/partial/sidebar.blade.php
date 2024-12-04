@@ -147,7 +147,7 @@
                     <i class="toggle-arrow"></i>
                 </a>
                 <ul class="submenu">
-                <li><a href="{{ route('admin.new-sales') }}"><i class="bx bx-radio-circle"></i>Add New Sales</a></li>
+                <li><a href="{{ route('admin.sales.new-sales') }}"><i class="bx bx-radio-circle"></i>Add New Sales</a></li>
                 <li><a href="{{ route('admin.sales') }}"><i class="bx bx-radio-circle"></i>Sales List</a></li>
                 </ul>
             </li>
