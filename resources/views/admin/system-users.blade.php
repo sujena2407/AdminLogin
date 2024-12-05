@@ -35,6 +35,126 @@
 	@include('admin.partial.topbar')
 			<!--end header -->
 			<!--start page wrapper -->
+			<div class="page-wrapper">
+                <div class="page-content">
+
+                    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+                        <div class="breadcrumb-title pe-3">System Users</div>
+                        <div class="ps-3">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0 p-0">
+                                    <li class="breadcrumb-item"><a href="dashboard.php"><i class="bx bx-home-alt"></i></a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">User Management</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h6 class="mb-0 text-uppercase">System Users List</h6>
+                        </div>
+                        <div class="col-sm-6 text-end">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleLargeModal">Add New User</button>
+                        </div>
+                        </div>
+
+                        <hr/>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="example2" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Contact</th>
+                                            <th>Desig</th>
+                                            <th>Type</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                            <th>Password Reset</th>
+                                            </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($users as $user)
+                                <tr>
+                                    <td>{{ $user->U_Title }} {{ $user->U_FName }} {{ $user->U_LName }}</td>
+                                    <td>{{ $user->U_Email }}</td>
+                                    <td>{{ $user->U_Contact }}</td>
+                                    <td>{{ $user->U_Designation }}</td>
+                                    <td>
+                                        @switch($user->U_Type)
+                                            @case(0)
+                                                <span class="badge bg-success">Super Admin</span>
+                                                @break
+                                            @case(1)
+                                                <span class="badge bg-info">Admin</span>
+                                                @break
+                                            @case(2)
+                                                <span class="badge bg-primary">Sales Admin</span>
+                                                @break
+                                            @case(3)
+                                                <span class="badge bg-danger">Sales Person</span>
+                                                @break
+                                            @case(4)
+                                                <span class="badge bg-warning">Account Person</span>
+                                                @break
+                                            @default
+                                                <span class="badge bg-secondary">View Person</span>
+                                        @endswitch
+                                    </td>
+                                    <td>
+                                        @if ($user->U_Status == 0)
+                                            <span class="badge bg-success">Active</span>
+                                        @else
+                                            <span class="badge bg-danger">Deactivate</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                    <a >
+                                        <button type="button" class="btn btn-sm btn-primary btn-rounded waves-effect waves-light">View & Edit</button>
+                                    </a>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#resetPasswordModal" onclick="setUserIdToModal('{{ $user->id }}', '{{ $user->U_Title }} {{ $user->U_FName }} {{ $user->U_LName }}')">
+                                            Password Reset
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Contact</th>
+                                <th>Designation</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                                <th>Password Reset</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function setUserIdToModal(userId, name) {
+        document.getElementById('showUserModelTitle').textContent = name;
+        document.getElementById('showUserModelTitle').value = userId;
+    }
+</script>
+                            </div>
+                        </div>
+
+
+
+                        <div class="modal fade" id="exampleLargeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="row">
         <div class="card-body p-4">
             <!-- Display Success Message -->

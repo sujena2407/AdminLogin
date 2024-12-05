@@ -12,9 +12,8 @@ class UserController extends Controller
     // Display users or the add user form (based on condition)
     public function create()
     {
-
-        // Pass the users data to the view
-        return view('admin.system-users');
+        $users = User::all();  // Fetch all users
+        return view('admin.system-users', compact('users'));
     }
 
     // Handle form submission to add a new user

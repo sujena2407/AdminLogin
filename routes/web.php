@@ -67,11 +67,9 @@ Route::prefix('admin/property')->group(function () {
 Route::get('/admin/customer', [CustomerController::class, 'index'])->name('admin.customer');
 
 // System Management
-// Route to show user management page (both list and form)
 Route::get('/admin', [UserController::class, 'create'])->name('admin.system-users');
-
-// Route to handle form submission to add a new user
 Route::post('/admin', [UserController::class, 'store'])->name('admin.store');
+//Route::get('/admin', [UserController::class, 'edit'])->name('admin.edit');
 
 // User CRUD (if required)
 Route::prefix('users')->group(function () {
