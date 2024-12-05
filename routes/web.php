@@ -68,10 +68,10 @@ Route::get('/admin/customer', [CustomerController::class, 'index'])->name('admin
 
 // System Management
 // Route to show user management page (both list and form)
-Route::get('/admin', [UserController::class, 'index'])->name('admin.system-users');
+Route::get('/admin', [UserController::class, 'create'])->name('admin.system-users');
 
 // Route to handle form submission to add a new user
-Route::post('/admin', [UserController::class, 'addUser'])->name('system.users.store');
+Route::post('/admin', [UserController::class, 'store'])->name('admin.store');
 
 // User CRUD (if required)
 Route::prefix('users')->group(function () {

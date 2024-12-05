@@ -35,221 +35,126 @@
 	@include('admin.partial.topbar')
 			<!--end header -->
 			<!--start page wrapper -->
-			<div class="page-wrapper">
-				<div class="page-content">
+    <div class="row">
+        <div class="card-body p-4">
+            <!-- Display Success Message -->
+            <div id="response-message"></div>
 
-<!-- Breadcrumb and Title -->
-<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-    <div class="breadcrumb-title pe-3">System Users</div>
-    <div class="ps-3">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-0 p-0">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i class="bx bx-home-alt"></i></a></li>
-                <li class="breadcrumb-item active" aria-current="page">User Management</li>
-            </ol>
-        </nav>
-    </div>
-</div>
+        <!-- Add User Form -->
+        <form action="{{ route('admin.store') }}" method="POST" class="row g-3 needs-validation" novalidate enctype="multipart/form-data">
+            @csrf <!-- Laravel CSRF Protection -->
 
-<div class="row">
-    <div class="col-sm-6">
-        <h6 class="mb-0 text-uppercase">System Users List</h6>
-    </div>
-    <div class="col-sm-6 text-end">
-
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">Add New User</button>
-
-    </div>
-</div>
-<hr/>
-
-<!-- User List -->
-<div class="card">
-    <div class="card-body">
-        <div class="table-responsive">
-            <table id="example2" class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Contact</th>
-                        <th>Desig</th>
-                        <th>Type</th>
-                        <th>Status</th>
-
-                            <th>Action</th>
-                            <th>Password Reset</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($users as $user)
-                        <tr>
-                            <td>{{ $user->U_Title }} {{ $user->U_FName }} {{ $user->U_LName }}</td>
-                            <td>{{ $user->U_Email }}</td>
-                            <td>{{ $user->U_Contact }}</td>
-                            <td>{{ $user->U_Designation }}</td>
-                            <td>
-                                @if($user->U_Type == 0)
-                                    <span class="badge bg-success shadow-sm w-100">Super Admin</span>
-                                @elseif($user->U_Type == 1)
-                                    <span class="badge bg-info shadow-sm w-100">Admin</span>
-                                @elseif($user->U_Type == 2)
-                                    <span class="badge bg-primary shadow-sm w-100">Sales Admin</span>
-                                @elseif($user->U_Type == 3)
-                                    <span class="badge bg-danger shadow-sm w-100">Sales Person</span>
-                                @elseif($user->U_Type == 4)
-                                    <span class="badge bg-warning shadow-sm w-100">Account Person</span>
-                                @else
-                                    <span class="badge bg-secondary shadow-sm w-100">View Person</span>
-                                @endif
-                            </td>
-                            <td>
-                                @if($user->U_Status == 0)
-                                    <span class="badge bg-success shadow-sm w-100">Active</span>
-                                @else
-                                    <span class="badge bg-danger shadow-sm w-100">Deactivate</span>
-                                @endif
-                            </td>
-
-                            @if(auth()->user()->U_Type != 5)
-                                <td>
-                                    <a href="{{ route('users.show', $user->id) }}">
-                                        <button type="button" class="btn btn-sm btn-primary btn-rounded">View & Edit</button>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="{{ route('users.password-reset', $user->id) }}">
-                                        <button type="button" class="btn btn-sm btn-secondary btn-rounded">Password Reset</button>
-                                    </a>
-                                </td>
-                            @endif
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<!-- Modal for Adding New User -->
-<div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addUserLabel">Add System User</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-			<div class="row">
-			<div class="card-body p-4">
-                <form class="row g-3 needs-validation" method="POST" action="{{ route('system.users.store') }}">
-                    @csrf
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label for="U_Title" class="form-label">Title</label>
-                            <select class="form-select" name="U_Title" required>
-                                <option selected disabled value="">Choose.</option>
-                                <option value="Mr.">Mr.</option>
-                                <option value="Mrs.">Mrs.</option>
-                                <option value="Miss.">Miss.</option>
-                                <option value="Ms.">Ms.</option>
-                                <option value="Dr.">Dr.</option>
-                            </select>
-                            <div class="invalid-feedback">Please select a title.</div>
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Add System User</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="col-md-5">
-                            <label for="U_FName" class="form-label">First Name</label>
-                            <input type="text" class="form-control" oninput="checkInputElementsFilled()" placeholder="First Name" name="U_FName" required>
-                            <div class="invalid-feedback">Please enter first name.</div>
-                        </div>
-                        <div class="col-md-5">
-                            <label for="U_LName" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" oninput="checkInputElementsFilled()" placeholder="Last Name" name="U_LName" required>
-                            <div class="invalid-feedback">Please enter last name.</div>
-                        </div>
-                    </div>
+                        <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="U_Title" class="form-label">Title</label>
+                                <select id="U_Title" class="form-select" name="U_Title" required>
+                                    <option selected disabled value="">Choose.</option>
+                                    <option value="Mr.">Mr.</option>
+                                    <option value="Mrs.">Mrs.</option>
+                                    <option value="Miss.">Miss.</option>
+                                    <option value="Ms.">Ms.</option>
+                                    <option value="Dr.">Dr.</option>
+                                </select>
+                                @error('U_Title')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                    <div class="col-md-6">
-                        <label for="U_Email" class="form-label">Email</label>
-                        <input type="email" class="form-control"  oninput="checkInputElementsFilled()" placeholder="Email" name="U_Email" required>
-                        <div class="invalid-feedback">Please enter a valid email.</div>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="U_Contact" class="form-label">Phone Number</label>
-                        <input type="text" class="form-control" oninput="checkInputElementsFilled()" placeholder="Contact No" name="U_Contact" required>
-                        <div class="invalid-feedback">Please enter a valid phone number.</div>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="U_Designation" class="form-label">Designation</label>
-                        <input type="text" class="form-control" oninput="checkInputElementsFilled()" placeholder="Designation" name="U_Designation" required>
-                        <div class="invalid-feedback">Please enter the designation.</div>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="U_Type" class="form-label">User Type</label>
-                        <select class="form-select" oninput="checkInputElementsFilled()" class="form-select" name="U_Type" required>
-                            <option value="0">Super Admin</option>
-                            <option value="1">Admin</option>
+                            <div class="col-md-5">
+                                <label for="U_FName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="U_FName" placeholder="First Name" name="U_FName" required>
+                                @error('U_FName')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-5">
+                                <label for="U_LName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="U_LName" placeholder="Last Name" name="U_LName" required>
+                                @error('U_LName')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <br>
+                        <div class ="row">
+                        <div class="col-md-6">
+                            <label for="U_Email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="U_Email" placeholder="Email" name="U_Email" required>
+                            @error('U_Email')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <label for="bsValidation6" class="form-label">Contact No</label>
+                            <input type="number" class="form-control" id="bsValidation6" placeholder="Contact No" name="U_Contact" required>
+                            @error('U_Contact')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                       </div>
+                       <br>
+
+
+                    <div class ="row">
+                        <div class="col-md-6">
+                            <label for="U_Designation" class="form-label">Designation</label>
+                            <input type="text" class="form-control" id="U_Designation" placeholder="Designation" name="U_Designation" required>
+                            @error('U_Designation')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="U_Type" class="form-label">User Type</label>
+                            <select id="U_Type" class="form-select" name="U_Type" required>
+                            <option selected disabled value="">Choose.</option>
+
+
+                                <option value="0">Super Admin</option>
+                                <option value="1">Admin</option>
+
                             <option value="2">Sales Admin</option>
                             <option value="3">Sales Person</option>
                             <option value="4">Account Person</option>
                             <option value="5">View Person</option>
                         </select>
-                        <div class="invalid-feedback">Please select the user type.</div>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="U_Password" class="form-label">Password</label>
-                        <input type="password" class="form-control" onkeyup='check()' placeholder="Enter Password" name="U_Password" required>
-                        <div class="invalid-feedback">Please enter a password.</div>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="U_Password_confirmation" class="form-label">Re-Enter Password</label>
-                        <input type="password" class="form-control" onkeyup='check()' placeholder="Re-Enter Password" name="U_Password_confirmation" required>
-                        <div class="invalid-feedback">Please Re-Enter Password.</div>
-                    </div>
+                            @error('U_Type')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                     </div>
+                     <br>
 
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success px-4">Add User</button>
-                        <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+                    <div class = "row">
+                        <div class="col-md-6">
+                            <label for="U_Password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="U_Password" placeholder="Enter Password" name="U_Password" required>
+                            @error('U_Password')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-<!-- Modal for Password Reset -->
-<div class="modal fade" id="editPasswordModal" tabindex="-1" aria-labelledby="editPWLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit User Password</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="col-md-6">
+                            <label for="U_Password_confirmation" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="U_Password_confirmation" placeholder="Re-Enter Password" name="U_Password_confirmation" required>
+                        </div>
+                    </div>
+                    <br>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success px-4">Add User</button>
+                            <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="modal-body">
-                <h6 class="form-label">User</h6>
-                <form method="POST"  class="needs-validation">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="U_Password" class="form-label">New Password</label>
-                        <input type="password" class="form-control" name="U_Password" required>
-                        <div class="invalid-feedback">Please enter a password.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="U_Password_confirmation" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control" name="U_Password_confirmation" required>
-                        <div class="invalid-feedback">Please confirm your password.</div>
-                    </div>
-
-                    <div class="modal-footer">
-					<button type="button" class="btn btn-success px-4" id="updatePasswordButton">Edit</button>
-					<button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
 			function updatePassword() {

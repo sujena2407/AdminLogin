@@ -10,74 +10,87 @@ use Illuminate\Support\Facades\Log;
 class UserController extends Controller
 {
     // Display users or the add user form (based on condition)
-    public function index()
+    public function create()
     {
-        $users = User::all();  // Fetch all users
-        return view('admin.system-users', compact('users'));
+
+        // Pass the users data to the view
+        return view('admin.system-users');
     }
 
     // Handle form submission to add a new user
-    public function addUser(Request $request)
+    public function store(Request $request)
     {
-        // Check if the user is authenticated
-        if (!Auth::check()) {
-            return redirect()->route('admin.login')->with('error', 'You must be logged in to perform this action.');
-        }
-
-        // Validation
-        $request->validate([
+        // Validate the form inputs
+        $validated = $request->validate([
             'U_Title' => 'required',
             'U_FName' => 'required',
             'U_LName' => 'required',
             'U_Email' => 'required|email|unique:users,U_Email',
-            'U_Contact' => 'required',
+            'U_Contact' => 'required|numeric|regex:/^[0-9]{10}$/',
             'U_Designation' => 'required',
-            'U_Type' => 'required',
-            'U_Password' => 'required|confirmed|min:6',
+            'U_Type' => 'required|integer',
+            'U_Password' => 'required|min:8|confirmed',
+        ], [
+            'U_Title.required' => 'Title is required.',
+            'U_FName.required' => 'First Name is required.',
+            'U_LName.required' => 'Last Name is required.',
+            'U_Email.required' => 'Email is required.',
+            'U_Email.email' => 'Please provide a valid email.',
+            'U_Email.unique' => 'The email address is already registered.',
+            'U_Contact.required' => 'Contact number is required.',
+            'U_Contact.numeric' => 'Contact number must be numeric.',
+            'U_Contact.regex' => 'Contact number must be exactly 10 digits.',
+            'U_Designation.required' => 'Designation is required.',
+            'U_Type.required' => 'User type is required.',
+            'U_Password.required' => 'Password is required.',
+            'U_Password.min' => 'Password must be at least 8 characters.',
+            'U_Password.confirmed' => 'Passwords do not match.',
         ]);
 
-        // Set user image based on title
+
         $userImage = ($request->U_Title === "Mr." || $request->U_Title === "Dr.") ? "image_man.png" : "images_woman.png";
 
-        // Create new user
-        $user = new User();
-        $user->U_Title = $request->U_Title;
-        $user->U_FName = $request->U_FName;
-        $user->U_LName = $request->U_LName;
-        $user->U_Email = $request->U_Email;
-        $user->U_Contact = $request->U_Contact;
-        $user->U_Designation = $request->U_Designation;
-        $user->U_Type = $request->U_Type;
-        $user->U_Password = Hash::make($request->U_Password);
-        $user->U_Status = 0; // Default active status
-        $user->U_Cratedby = Auth::id();  // Set the ID of the currently logged-in user
-        $user->U_CratedDate = now();
-        $user->u_Image = $userImage;
-        $user->pw_status = 0; // Password not reset
+        // // Hash the password
+        $hashedPassword = Hash::make($request->U_Password);
 
-        $user->save();
+        $createdBy = 1;
 
-        // Log activity
-        $userTypeName = $this->getUserTypeName($request->U_Type);
-        $logMessage = "Add New User - (name: {$request->U_FName} {$request->U_LName} | type: {$userTypeName})";
-        Log::channel('activity_log')->info($logMessage);
+        // Store the new user using Eloquent
+        $newUser = User::create([
+            'U_Title' => $request->U_Title,
+            'U_FName' => $request->U_FName,
+            'U_LName' => $request->U_LName,
+            'U_Email' => $request->U_Email,
+            'U_Contact' => $request->U_Contact,
+            'U_Designation' => $request->U_Designation,
+            'U_Type' => $request->U_Type,
+            'U_Password' => $hashedPassword,
+            'U_Status' => 0,
+            'U_Cratedby' => $createdBy, // Assuming the user is logged in
+            'U_CratedDate' => now(),
+            'u_Image' => $userImage,
+            'pw_status' => 0,
+        ]);
 
-        return redirect()->route('admin.system-users')->with('success', 'User added successfully!');
-    }
+        // Log the activity
+        $userType = [
+            0 => 'Super Admin',
+            1 => 'Admin',
+            2 => 'Sales Admin',
+            3 => 'Sales Person'
+        ][$request->U_Type] ?? 'Sales Person';
 
-    private function getUserTypeName($userType)
-    {
-        switch ($userType) {
-            case 0:
-                return 'Super Admin';
-            case 1:
-                return 'Admin';
-            case 2:
-                return 'Sales Admin';
-            case 3:
-                return 'Sales Person';
-            default:
-                return 'Unknown';
-        }
+        // $logTime = now();
+        // DB::table('activity_log')->insert([
+        //     'U_id' => Auth::id(),
+        //     'log_time' => $logTime,
+        //     'activity' => "Add New User - (name : {$request->U_FName} {$request->U_LName} | type : $userType)"
+        // ]);
+
+        // Redirect back to the users list
+       // return redirect()->route('user.index')->with('success', 'User created successfully!');
+        // $users = User::all();
+        // return view('user.create-system-user', compact('users'));
+        // alert("User created");
     }
 }
