@@ -70,7 +70,7 @@ class UserController extends Controller
             'u_Image' => $userImage,
             'pw_status' => 0,
         ]);
-
+        return redirect()->route('admin.system-users')->with('success', 'User created successfully!');
         // Log the activity
         $userType = [
             0 => 'Super Admin',
