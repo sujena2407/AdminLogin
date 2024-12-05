@@ -69,6 +69,7 @@ Route::get('/admin/customer', [CustomerController::class, 'index'])->name('admin
 // System Management
 Route::get('/admin', [UserController::class, 'create'])->name('admin.system-users');
 Route::post('/admin', [UserController::class, 'store'])->name('admin.store');
+//Route::post('/admin', [UserController::class, 'updatePassword'])->name('admin.updatePassword');
 //Route::get('/admin', [UserController::class, 'edit'])->name('admin.edit');
 
 // User CRUD (if required)
