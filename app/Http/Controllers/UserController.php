@@ -92,4 +92,25 @@ class UserController extends Controller
         // return view('user.create-system-user', compact('users'));
         // alert("User created");
     }
+    /*public function updatePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|exists:users,id',
+            'password' => 'required|string|min:6|confirmed',  // Ensure 'password_confirmation' is included in the form.
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => $validator->errors()
+            ], 400);
+        }
+
+        $user = User::find($request->user_id);
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return response()->json([
+            'success' => 'Password has been updated successfully.'
+        ], 200);
+    }*/
 }
