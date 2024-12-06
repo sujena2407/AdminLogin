@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{ asset('css/semi-dark.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/header-colors.css') }}" />
 	<title>System Users | Quick Track Admin - Kelsey Developments PLC</title>
+
 </head>
 
 	<body>
@@ -68,6 +69,30 @@
     <div class="card-body">
         <div class="table-responsive">
             <table id="example2" class="table table-striped table-bordered">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="dataTables_length" id="example2_length">
+                    <label>Show <select name="example2_length" aria-controls="example2" class="form-select form-select-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="-1">All</option></select> entries</label>
+                    </div>
+                    <div class="dt-buttons btn-group btn-container">
+                        <button class="btn btn-outline-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="example2" type="button">
+                            <span>Excel</span>
+                        </button>
+                        <button class="btn btn-outline-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="example2" type="button">
+                            <span>PDF</span>
+                        </button>
+                        <button class="btn btn-outline-secondary buttons-print" tabindex="0" aria-controls="example2" type="button">
+                            <span>Print</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div id="example2_filter" class="dataTables_filter">
+                        <label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example2"></label>
+                    </div>
+                    </div>
+                </div>
+</div>
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -114,7 +139,12 @@
 
 
                             <td><a href="View-System-user.php?view_user="><button type="button" class="btn btn-sm btn-primary btn-rounded waves-effect waves-light">View & Edit</button></a></td>
-							<td><a><button type="button" data-bs-target="#editPasswordModal" data-bs-toggle="modal" class="btn btn-sm btn-secondary btn-rounded waves-effect waves-light" onclick="setUserIdToModal('{{ $user->id }}', '{{ $user->title . ' ' . $user->first_name . ' ' . $user->last_name }}')">Password Reset</button></a></td>
+							<td><a><button type="button" data-bs-toggle="modal" data-bs-target="#editPasswordModal"
+        class="btn btn-sm btn-secondary btn-rounded waves-effect waves-light"
+        onclick="setUserIdToModal('{{ $user->id }}', '{{ $user->U_Title . ' ' . $user->U_FName . ' ' . $user->U_LName }}')">
+    Password Reset
+</button>
+</a></td>
 
 
                         </tr>
@@ -212,40 +242,55 @@
 </div>
 
 <!-- Modal for Password Reset -->
+
 <div class="modal fade" id="editPasswordModal" tabindex="-1" aria-labelledby="editPWLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit User Password</h5>
+                <h5 class="modal-title">Reset Password for <span id="modalUserName"></span></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="passwordForm" class="needs-validation">
+            <h6 class="form-label" id="showUserModelTitle">User Name</h6>
+            <div class="row">
+                <div class="card-body p-4">
+                <form class="row g-3 needs-validation" novalidate id="passwordForm" method="POST" action="{{ route('admin.updatepassword') }}">
                     @csrf
-                    <input type="hidden" id="showUserModelTitle" value="{{ $userId ?? '' }}">
-                    <div class="mb-3">
-                        <label for="updatePassword2" class="form-label">New Password</label>
-                        <input type="password" id="updatePassword2" class="form-control" name="password" required>
-                        <div class="invalid-feedback">Please enter a password.</div>
+                    <input type="hidden" id="showUserModelTitle" name="user_id">
+                    <div class="col-md-6">
+                        <label for="password" class="form-label">New Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                        <div class="invalid-feedback">
+                            Please Type a password.
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="updateCheckPassword2" class="form-label">Confirm Password</label>
-                        <input type="password" id="updateCheckPassword2" class="form-control" name="password_confirmation" required>
-                        <div class="invalid-feedback">Please confirm your password.</div>
+                    <div class="col-md-6">
+                        <label for="password_confirmation" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                        <div class="invalid-feedback">
+                            Please Re Enter Password.
+                        </div>
                     </div>
-
                     <div class="modal-footer">
-                        <button type="button" id="updatePasswordButton" class="btn btn-success px-4">Update Password</button>
-                        <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Close</button>
-                        <button type="button" id="resetPasswordButton" class="btn btn-warning px-4">Reset Form</button>
+                        <button type="submit" class="btn btn-success">Reset Password</button>
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function setUserIdToModal(userId, userName) {
+    document.getElementById('showUserModelTitle').value = userId;
+    document.getElementById('modalUserName').innerText = userName;
+}
+</script>
+
 
 <script>
+
+
    document.addEventListener('DOMContentLoaded', function () {
     const updatePasswordButton = document.getElementById('updatePasswordButton');
     updatePasswordButton.addEventListener('click', function (e) {
