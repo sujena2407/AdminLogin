@@ -113,16 +113,9 @@
                             </td>
 
 
-                                <td>
-                                    <a>
-                                        <button type="button" class="btn btn-sm btn-primary btn-rounded">View & Edit</button>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a>
-                                        <button type="button" class="btn btn-sm btn-secondary btn-rounded">Password Reset</button>
-                                    </a>
-                                </td>
+                            <td><a href="View-System-user.php?view_user="><button type="button" class="btn btn-sm btn-primary btn-rounded waves-effect waves-light">View & Edit</button></a></td>
+							<td><a><button type="button" data-bs-target="#editPasswordModal" data-bs-toggle="modal" class="btn btn-sm btn-secondary btn-rounded waves-effect waves-light" onclick="setUserIdToModal('{{ $user->id }}', '{{ $user->title . ' ' . $user->first_name . ' ' . $user->last_name }}')">Password Reset</button></a></td>
+
 
                         </tr>
                     @endforeach
@@ -165,7 +158,7 @@
                         </div>
                         <div class="col-md-5">
                             <label for="U_LName" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" name="U_LName" required>
+                            <input type="text" class="form-control" name="U_LName" >
                             <div class="invalid-feedback">Please enter last name.</div>
                         </div>
                     </div>
@@ -227,23 +220,24 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <h6 class="form-label">User</h6>
-                <form method="POST"  class="needs-validation">
+                <form id="passwordForm" class="needs-validation">
                     @csrf
+                    <input type="hidden" id="showUserModelTitle" value="{{ $userId ?? '' }}">
                     <div class="mb-3">
-                        <label for="U_Password" class="form-label">New Password</label>
-                        <input type="password" class="form-control" name="U_Password" required>
+                        <label for="updatePassword2" class="form-label">New Password</label>
+                        <input type="password" id="updatePassword2" class="form-control" name="password" required>
                         <div class="invalid-feedback">Please enter a password.</div>
                     </div>
                     <div class="mb-3">
-                        <label for="U_Password_confirmation" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control" name="U_Password_confirmation" required>
+                        <label for="updateCheckPassword2" class="form-label">Confirm Password</label>
+                        <input type="password" id="updateCheckPassword2" class="form-control" name="password_confirmation" required>
                         <div class="invalid-feedback">Please confirm your password.</div>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success px-4">Update Password</button>
+                        <button type="button" id="updatePasswordButton" class="btn btn-success px-4">Update Password</button>
                         <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Close</button>
+                        <button type="button" id="resetPasswordButton" class="btn btn-warning px-4">Reset Form</button>
                     </div>
                 </form>
             </div>
@@ -252,63 +246,60 @@
 </div>
 
 <script>
-			function updatePassword() {
-				var getUserId = document.getElementById('showUserModelTitle').value;
-				var getCheckPW = document.getElementById('updateCheckPassword2').value;
-				var getPW = document.getElementById('updatePassword2').value;
+   document.addEventListener('DOMContentLoaded', function () {
+    const updatePasswordButton = document.getElementById('updatePasswordButton');
+    updatePasswordButton.addEventListener('click', function (e) {
+        e.preventDefault(); // Prevent form submission
 
-				var jSonData = {
-					update_password: true,
-					user_id: getUserId,
-					password: getPW
-				}
+        const userId = document.getElementById('showUserModelTitle').value;
+        const password = document.getElementById('updatePassword2').value;
+        const confirmPassword = document.getElementById('updateCheckPassword2').value;
 
-				Swal.fire({
-					title: "Are you sure?",
-					text: "You want to update this!",
-					icon: "warning",
-					showCancelButton: true,
-					confirmButtonColor: "#3085d6",
-					cancelButtonColor: "#d33",
-					confirmButtonText: "Yes, update it!"
-					}).then((result) => {
-						if (result.isConfirmed) {
-							$.ajax({
-								type: 'GET',
-								url: 'routes(admin.updatepassword)',
-								data: jSonData,
-								success: function(data1) {
-									if (result.isConfirmed) {
-										Swal.fire({
-											title: "Updated!",
-											text: "Your password has been updated.",
-											icon: "success"
-										}).then((result) => {
-											location.reload();
-										});
-									}
-								},
-								error: function(xhr, status, error) {
-									Swal.fire({
-										icon: "error",
-										title: "Oops...",
-										text: "Something went wrong!",
-										}).then((result) => {
-											location.reload();
-										});
-								}
-							})
-						}
-				});
-			}
+        // Validate passwords match
+        if (password !== confirmPassword) {
+            Swal.fire('Error', 'Passwords do not match!', 'error');
+            return;
+        }
 
-			document.addEventListener('DOMContentLoaded', function() {
-			var updatePasswordButton = document.getElementById('updatePasswordButton');
-				updatePasswordButton.addEventListener('click', function() {
-					updatePassword();
-				});
-			});
-		</script>
+        const requestData = {
+            user_id: userId,
+            password: password,
+            password_confirmation: confirmPassword,
+        };
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You want to update this!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, update it!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route("admin.updatepassword") }}',
+                    data: requestData,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    success: function (response) {
+                        Swal.fire('Updated!', response.message, 'success').then(() => {
+                            location.reload();
+                        });
+                    },
+                    error: function (xhr) {
+                        Swal.fire('Oops...', xhr.responseJSON?.message || 'Something went wrong!', 'error');
+                    },
+                });
+            }
+        });
+    });
+});
+
+</script>
+
         <!-- Bootstrap JS -->
 		<script src="/js/bootstrap.bundle.min.js"></script>
 		<!--plugins-->
@@ -429,6 +420,54 @@
 		<script src="/js/app.js"></script>
         <script src="/js/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+$(document).ready(function () {
+    // Handle sidebar toggle (collapse/expand)
+    $('#toggle-sidebar').on('click', function () {
+        $('#sidebar').toggleClass('collapsed');
+        $('#sidebar').data('collapsed-once', $('#sidebar').hasClass('collapsed'));
 
+        if ($('#sidebar').hasClass('collapsed')) {
+            $('.submenu').slideUp();
+            $('.menu-label').hide();
+            $('.logo-text').hide();
+            $('.bx-arrow-back').hide();
+            $('.toggle-arrow').removeClass('bx-rotate-180');
+        } else {
+            $('.logo-text').fadeIn();
+            $('.bx-arrow-back').fadeIn();
+            $('.menu-label').fadeIn();
+        }
+    });
+
+    // Handle submenu toggle when sidebar is not collapsed
+    $('.has-arrow').on('click', function (e) {
+        e.preventDefault();
+        if (!$('#sidebar').hasClass('collapsed')) {
+            var submenu = $(this).closest('li').find('.submenu');
+            submenu.stop(true, true).slideToggle();
+            $(this).find('.toggle-arrow').toggleClass('bx-rotate-180');
+        }
+    });
+
+    // Expand sidebar when mouse enters the sidebar area
+    $('#sidebar').on('mouseenter', function () {
+        if ($('#sidebar').hasClass('collapsed')) {
+            $('#sidebar').removeClass('collapsed');
+            $('.menu-label').fadeIn();
+        }
+    });
+
+    // Collapse sidebar when mouse leaves the sidebar area
+    $('#sidebar').on('mouseleave', function () {
+        if ($('#sidebar').data('collapsed-once')) {
+            $('#sidebar').addClass('collapsed');
+            $('.menu-label').fadeOut();
+        }
+    });
+});
+
+
+</script>
 	</body>
 </html>

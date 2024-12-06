@@ -113,4 +113,24 @@ class UserController extends Controller
             'success' => 'Password has been updated successfully.'
         ], 200);
     }*/
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'password' => 'required|confirmed|min:8',
+        ]);
+
+        try {
+            // Find the user by ID
+            $user = User::findOrFail($request->user_id);
+
+            // Update the password
+            $user->password = Hash::make($request->password);
+            $user->save();
+
+            return response()->json(['message' => 'Password updated successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'An error occurred while updating the password'], 500);
+        }
+    }
 }
