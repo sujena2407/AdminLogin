@@ -127,3 +127,42 @@
         </nav>
     </div>
 </header>
+<script>
+$(document).ready(function() {
+    // Initialize theme based on localStorage
+    const theme = localStorage.getItem("theme") || "light"; // Default to light
+    setTheme(theme);
+
+    // Theme toggle handler
+    $(".dark-mode").on("click", function() {
+        const newTheme = $("html").hasClass("light-theme") ? "dark" : "light";
+        setTheme(newTheme);
+        localStorage.setItem("theme", newTheme); // Save preference
+    });
+
+    // Function to apply a theme
+    function setTheme(theme) {
+        if (theme === "dark") {
+            $("html").removeClass("light-theme").addClass("dark-theme");
+            $(".dark-mode-icon i").removeClass("bx-moon").addClass("bx-sun");
+        } else {
+            $("html").removeClass("dark-theme").addClass("light-theme");
+            $(".dark-mode-icon i").removeClass("bx-sun").addClass("bx-moon");
+        }
+    }
+});
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+/* Example themes */
+html.light-theme {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+html.dark-theme {
+    background-color: #000000;
+    color: #ffffff;
+}
+</style>

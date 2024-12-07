@@ -36,124 +36,136 @@
 	@include('admin.partial.topbar')
 			<!--end header -->
 			<!--start page wrapper -->
-			<div class="page-wrapper">
-				<div class="page-content">
+            <div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">System Users</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item">
+                            <a href="dashboard.php"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">User Management</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
 
-<!-- Breadcrumb and Title -->
-<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-    <div class="breadcrumb-title pe-3">System Users</div>
-    <div class="ps-3">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-0 p-0">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i class="bx bx-home-alt"></i></a></li>
-                <li class="breadcrumb-item active" aria-current="page">User Management</li>
-            </ol>
-        </nav>
-    </div>
-</div>
+        <div class="row">
+            <div class="col-sm-6">
+                <h6 class="mb-0 text-uppercase">System Users List</h6>
+            </div>
+            <div class="col-sm-6 text-end">
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">Add New User</button>
+            </div>
+        </div>
 
-<div class="row">
-    <div class="col-sm-6">
-        <h6 class="mb-0 text-uppercase">System Users List</h6>
-    </div>
-    <div class="col-sm-6 text-end">
+        <hr />
 
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">Add New User</button>
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="example2" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
 
-    </div>
-</div>
-<hr/>
+                                <th>Contact</th>
+                                <th>Desig</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                                <th>Password Reset</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($users as $user)
+                                <tr>
+                                    <td>{{ $user->U_Title }} {{ $user->U_FName }} {{ $user->U_LName }}</td>
+                                    <td>{{ $user->U_Email }}</td>
 
-<!-- User List -->
-<div class="card">
-    <div class="card-body">
-        <div class="table-responsive">
-            <table id="example2" class="table table-striped table-bordered">
-            <div class="row">
-                <div class="col-sm-12 col-md-6">
-                    <div class="dataTables_length" id="example2_length">
-                    <label>Show <select name="example2_length" aria-controls="example2" class="form-select form-select-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="-1">All</option></select> entries</label>
-                    </div>
-                    <div class="dt-buttons btn-group btn-container">
-                        <button class="btn btn-outline-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="example2" type="button">
-                            <span>Excel</span>
-                        </button>
-                        <button class="btn btn-outline-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="example2" type="button">
-                            <span>PDF</span>
-                        </button>
-                        <button class="btn btn-outline-secondary buttons-print" tabindex="0" aria-controls="example2" type="button">
-                            <span>Print</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                    <div id="example2_filter" class="dataTables_filter">
-                        <label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example2"></label>
-                    </div>
-                    </div>
-                </div>
-</div>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Contact</th>
-                        <th>Desig</th>
-                        <th>Type</th>
-                        <th>Status</th>
-
-                            <th>Action</th>
-                            <th>Password Reset</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($users as $user)
-                        <tr>
-                            <td>{{ $user->U_Title }} {{ $user->U_FName }} {{ $user->U_LName }}</td>
-                            <td>{{ $user->U_Email }}</td>
-                            <td>{{ $user->U_Contact }}</td>
-                            <td>{{ $user->U_Designation }}</td>
-                            <td>
-                                @if($user->U_Type == 0)
-                                    <span class="badge bg-success shadow-sm w-100">Super Admin</span>
-                                @elseif($user->U_Type == 1)
-                                    <span class="badge bg-info shadow-sm w-100">Admin</span>
-                                @elseif($user->U_Type == 2)
-                                    <span class="badge bg-primary shadow-sm w-100">Sales Admin</span>
-                                @elseif($user->U_Type == 3)
-                                    <span class="badge bg-danger shadow-sm w-100">Sales Person</span>
-                                @elseif($user->U_Type == 4)
-                                    <span class="badge bg-warning shadow-sm w-100">Account Person</span>
-                                @else
-                                    <span class="badge bg-secondary shadow-sm w-100">View Person</span>
-                                @endif
-                            </td>
-                            <td>
-                                @if($user->U_Status == 0)
-                                    <span class="badge bg-success shadow-sm w-100">Active</span>
-                                @else
-                                    <span class="badge bg-danger shadow-sm w-100">Deactivate</span>
-                                @endif
-                            </td>
-
-
-                            <td><a href="View-System-user.php?view_user="><button type="button" class="btn btn-sm btn-primary btn-rounded waves-effect waves-light">View & Edit</button></a></td>
-							<td><a><button type="button" data-bs-toggle="modal" data-bs-target="#editPasswordModal"
+                                    <td>{{ $user->U_Contact }}</td>
+                                    <td>{{ $user->U_Designation }}</td>
+                                    <td>
+                                        @switch($user->U_Type)
+                                            @case(0)
+                                                <span class="badge bg-success">Super Admin</span>
+                                                @break
+                                            @case(1)
+                                                <span class="badge bg-info">Admin</span>
+                                                @break
+                                            @case(2)
+                                                <span class="badge bg-primary">Sales Admin</span>
+                                                @break
+                                            @case(3)
+                                                <span class="badge bg-danger">Sales Person</span>
+                                                @break
+                                            @case(4)
+                                                <span class="badge bg-warning">Account Person</span>
+                                                @break
+                                            @default
+                                                <span class="badge bg-secondary">View Person</span>
+                                        @endswitch
+                                    </td>
+                                    <td>
+                                        @if ($user->U_Status == 0)
+                                            <span class="badge bg-success">Active</span>
+                                        @else
+                                            <span class="badge bg-danger">Deactivate</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="">
+                                            <button type="button" class="btn btn-sm btn-primary btn-rounded waves-effect waves-light">View & Edit</button>
+                                        </a>
+                                    </td>
+                                    <td><a><button type="button" data-bs-toggle="modal" data-bs-target="#editPasswordModal"
         class="btn btn-sm btn-secondary btn-rounded waves-effect waves-light"
         onclick="setUserIdToModal('{{ $user->id }}', '{{ $user->U_Title . ' ' . $user->U_FName . ' ' . $user->U_LName }}')">
     Password Reset
 </button>
 </a></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
 
-
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                                <th>Contact</th>
+                                <th>Designation</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                                <th>Password Reset</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+
+        <!-- Initialize DataTable -->
+        <script>
+           $(document).ready(function () {
+            $('#example2').DataTable({
+                dom: 'lBfrtip',
+                buttons: ['excel', 'pdf', 'print'], // Export buttons
+                paging: true,
+                lengthChange: true,
+                searching: true,
+                ordering: true,
+                info: true,
+                autoWidth: false,
+                lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]], // Dropdown options
+                pageLength: 10
+            });
+        });
+
+</script>
 
 <!-- Modal for Adding New User -->
 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserLabel" aria-hidden="true">
@@ -357,19 +369,19 @@
 		<script src="/plugins/validation/jquery.validate.min.js"></script>
 		<script src="/plugins/validation/validation-script.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-		<script>
-			$(document).ready(function() {
-			var table = $('#example2').DataTable( {
-				buttons: ['excel', 'pdf', 'print'],
-				lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]]
-			});
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
 
-			table.buttons().container()
-				.appendTo('#example2_wrapper .col-md-6:eq(0)')
-				.addClass('btn-container'); // Add a class to the buttons container
-			});
-		</script>
 
 		<style>
 			/* Add custom styling for the space between buttons and length menu */
@@ -514,5 +526,44 @@ $(document).ready(function () {
 
 
 </script>
+<script>
+$(document).ready(function() {
+    // Initialize theme based on localStorage
+    const theme = localStorage.getItem("theme") || "light"; // Default to light
+    setTheme(theme);
+
+    // Theme toggle handler
+    $(".dark-mode").on("click", function() {
+        const newTheme = $("html").hasClass("light-theme") ? "dark" : "light";
+        setTheme(newTheme);
+        localStorage.setItem("theme", newTheme); // Save preference
+    });
+
+    // Function to apply a theme
+    function setTheme(theme) {
+        if (theme === "dark") {
+            $("html").removeClass("light-theme").addClass("dark-theme");
+            $(".dark-mode-icon i").removeClass("bx-moon").addClass("bx-sun");
+        } else {
+            $("html").removeClass("dark-theme").addClass("light-theme");
+            $(".dark-mode-icon i").removeClass("bx-sun").addClass("bx-moon");
+        }
+    }
+});
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+/* Example themes */
+html.light-theme {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+html.dark-theme {
+    background-color: #000000;
+    color: #ffffff;
+}
+</style>
 	</body>
 </html>
